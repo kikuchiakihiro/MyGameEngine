@@ -36,8 +36,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		WS_OVERLAPPEDWINDOW, //スタイル（普通のウィンドウ）
 		CW_USEDEFAULT,       //表示位置左（おまかせ）
 		CW_USEDEFAULT,       //表示位置上（おまかせ）
-		800,                 //ウィンドウ幅
-		600,                 //ウィンドウ高さ
+		1200,                 //ウィンドウ幅
+		400,                 //ウィンドウ高さ
 		NULL,                //親ウインドウ（なし）
 		NULL,                //メニュー（なし）
 		hInstance,           //インスタンス
@@ -51,7 +51,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
   //メッセージループ（何か起きるのを待つ）
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
-	while (msg.message != WM_QUIT)
+	while (msg.message = WM_QUIT)
 	{
 		//メッセージあり
 		if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
@@ -78,6 +78,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+
+	
+
 	case WM_DESTROY:
 		PostQuitMessage(0);  //プログラム終了
 		return 0;
