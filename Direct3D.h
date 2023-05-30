@@ -11,7 +11,8 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 namespace Direct3D
 
 {
-	
+	extern ID3D11Device* pDevice;
+	extern ID3D11DeviceContext* pContext;
 	//初期化
 
 	void Initialize(int winW, int winH, HWND hWnd);
