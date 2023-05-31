@@ -160,13 +160,27 @@ void Direct3D::EndDraw()
 void Direct3D::Release()
 
 {
-	pRasterizerState->Release();
+	/*pRasterizerState->Release();
 	pVertexLayout->Release();
 	pPixelShader->Release();
-	pVertexShader->Release();
+	pVertexShader->Release();*/
 
-	pRenderTargetView->Release();
+
+	SAFE_RELEASE(pRasterizerState);
+	SAFE_RELEASE(pVertexLayout);
+	SAFE_RELEASE(pPixelShader);
+	SAFE_RELEASE(pVertexShader);
+
+	/*pRenderTargetView->Release();
 	pSwapChain->Release();
 	pContext->Release();
-	pDevice->Release();
+	pDevice->Release();*/
+
+	SAFE_RELEASE(pRenderTargetView);
+	SAFE_RELEASE(pSwapChain);
+	SAFE_RELEASE(pContext);
+	SAFE_RELEASE(pDevice);
+
+
+
 }

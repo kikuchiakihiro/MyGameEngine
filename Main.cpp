@@ -102,9 +102,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Direct3D::EndDraw();
 		}
 	}
-
+	SAFE_RELEASE(q);
+	SAFE_DELETE(q);
 	Direct3D::Release();
-	q->Release();
+	//q->Release();
+	//delete q;
+
+	q = nullptr;
 	return 0;
 }
 //ウィンドウプロシージャ（何かあった時によばれる関数）
