@@ -1,7 +1,8 @@
 #include "Quad.h"
 
 
-Quad::Quad()
+Quad::Quad():
+	pVertexBuffer_(nullptr)
 {
 }
 
@@ -14,9 +15,12 @@ void Quad::Initialize()
 	XMVECTOR vertices[] =
 	{
 		XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),	// 四角形の頂点（左上）
+		XMVectorSet(0.0f, 3.0f, 0.0f, 0.0f),
 		XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	// 四角形の頂点（右上）
 		XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	// 四角形の頂点（右下）
-		XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),	// 四角形の頂点（左下）		
+		XMVectorSet(0.0f, -3.0f, 0.0f, 0.0f),
+		XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f),	// 四角形の頂点（左下）	
+			
 	};
 
 	// 頂点データ用バッファの設定
@@ -31,7 +35,7 @@ void Quad::Initialize()
 	data_vertex.pSysMem = vertices;
 	Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	//インデックス情報
-	int index[] = { 0,2,3, 0,1,2 };
+	int index[] = { 0,1,2, 0,2,3, 0,3,5 ,3,4,5 };
 
 	D3D11_BUFFER_DESC   bd;
 	bd.Usage = D3D11_USAGE_DEFAULT;
@@ -92,9 +96,26 @@ void Quad::Draw()
 
 
 
+	UINT stride = sizeof(XMVECTOR);
+	UINT offset = 0;
+	Direct3D::pContext->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
+
+	// インデックスバッファーをセット
+	stride = sizeof(int);
+	offset = 0;
+	Direct3D::pContext->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
+
+	//コンスタントバッファ
+	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
+	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+
+	Direct3D::pContext->DrawIndexed(12, 0, 0);
 }
 
 void Quad::Release()
 {
+	pConstantBuffer_->Release();
+	pIndexBuffer_->Release();
+	pVertexBuffer_->Release();
 }
 

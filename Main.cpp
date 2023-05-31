@@ -1,6 +1,7 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
+#include "Quad.h"
 //#include <d3d11.h>
 //#pragma comment(lib, "d3d11.lib")
 
@@ -16,6 +17,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //ID3D11DeviceContext* pContext;		//デバイスコンテキスト
 //IDXGISwapChain* pSwapChain;		//スワップチェイン
 //ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
+
+Quad* q;
+
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -60,13 +64,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		hInstance,           //インスタンス
 		NULL                 //パラメータ（なし）
 	);
-
+	
+	
+	q = new Quad;
+	
 
   //ウィンドウを表示
 	ShowWindow(hWnd, nCmdShow);
 
 	Direct3D::Initialize(winW, winH, hWnd);
-	
+	q->Initialize();
   //メッセージループ（何か起きるのを待つ）
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
@@ -89,7 +96,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			//描画処理
 			Direct3D::BeginDraw();
-
+			q->Draw();
 			//スワップ（バックバッファを表に表示する）
 			
 			Direct3D::EndDraw();
@@ -97,7 +104,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	}
 
 	Direct3D::Release();
-
+	q->Release();
 	return 0;
 }
 //ウィンドウプロシージャ（何かあった時によばれる関数）
