@@ -23,7 +23,7 @@ namespace Direct3D
 
 	//シェーダー準備
 
-	void InitShader();
+	HRESULT InitShader();
 
 	//描画開始
 

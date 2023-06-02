@@ -69,7 +69,10 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
 	pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
 	//レンダーターゲットビューを作成
+	
 	pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
+	 
+
 
 	//一時的にバックバッファを取得しただけなので解放
 	pBackBuffer->Release();
