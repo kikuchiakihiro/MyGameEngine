@@ -98,7 +98,7 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
 }
 
 
-void Direct3D::InitShader()
+HRESULT Direct3D::InitShader()
 
 {
 	// 頂点シェーダの作成（コンパイル）
