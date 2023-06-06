@@ -1,5 +1,6 @@
 //インクルード
 #include <Windows.h>
+#include <iostream>
 #include "Direct3D.h"
 #include "Quad.h"
 #include "Camera.h"
@@ -104,9 +105,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Camera::Update();
 			//描画処理
 			Direct3D::BeginDraw();
-			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(45));
-			XMMATRIX mat = XMMatrixTranslation(4, 0, 0);
-			q->Draw(mat);
+			static int a=0;
+			a += 10;
+			XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+			XMMATRIX matT = XMMatrixTranslation(0.0, 0.0, 0.0);
+			XMMATRIX matR = XMMatrixRotationZ(XMConvertToRadians(a));
+			XMMATRIX matSRT = matS * matR * matT;//拡大　回転　移動
+			q->Draw(matSRT);
 			//スワップ（バックバッファを表に表示する）
 			
 			Direct3D::EndDraw();
