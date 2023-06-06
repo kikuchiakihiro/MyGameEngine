@@ -81,6 +81,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	Camera::Initialize();
 	
 
+	
   //メッセージループ（何か起きるのを待つ）
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
@@ -100,11 +101,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			//背景の色
 
 
-
+			Camera::Update();
 			//描画処理
 			Direct3D::BeginDraw();
-			Camera::Update();	
-			q->Draw();
+			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(45));
+			XMMATRIX mat = XMMatrixTranslation(4, 0, 0);
+			q->Draw(mat);
 			//スワップ（バックバッファを表に表示する）
 			
 			Direct3D::EndDraw();
