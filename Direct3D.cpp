@@ -1,6 +1,6 @@
 #include <d3dcompiler.h>
 #include "Direct3D.h"
-
+#include "Camera.h"
 
 
 
