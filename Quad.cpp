@@ -82,7 +82,7 @@ void Quad::Draw()
 	XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
 	XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点
 	XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
-	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列
+	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列 画角　XM_PIDIV4は45度
 
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(view * proj);
