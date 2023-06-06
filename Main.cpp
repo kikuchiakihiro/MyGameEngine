@@ -78,6 +78,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	{
 		return 0;
 	}
+	Camera::Initialize();
+	
+
   //メッセージループ（何か起きるのを待つ）
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
@@ -100,6 +103,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			//描画処理
 			Direct3D::BeginDraw();
+			Camera::Update();	
 			q->Draw();
 			//スワップ（バックバッファを表に表示する）
 			
