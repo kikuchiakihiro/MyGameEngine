@@ -4,6 +4,7 @@
 #include "Direct3D.h"
 #include "Quad.h"
 #include "Camera.h"
+#include "Texture.h"
 //#include <d3d11.h>
 //#pragma comment(lib, "d3d11.lib")
 
@@ -15,10 +16,10 @@ const char* TITLE_NAME = "サンプルゲーム";
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-//ID3D11Device* pDevice;		//デバイス
-//ID3D11DeviceContext* pContext;		//デバイスコンテキスト
-//IDXGISwapChain* pSwapChain;		//スワップチェイン
-//ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
+//ID3D11Device* pDevice_;		//デバイス
+//ID3D11DeviceContext* pContext_;		//デバイスコンテキスト
+//IDXGISwapChain* pSwapChain_;		//スワップチェイン
+//ID3D11RenderTargetView* pRenderTargetView_;	//レンダーターゲットビュー
 
 Quad* q;
 
@@ -106,10 +107,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			//描画処理
 			Direct3D::BeginDraw();
 			static int a=0;
-			a += 1;
+			a += 0.1f;
 			XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
 			XMMATRIX matT = XMMatrixTranslation(0.0, 0.0, 0.0);
-			XMMATRIX matR = XMMatrixRotationZ(XMConvertToRadians(a));
+			XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
 			XMMATRIX matSRT = matS * matR * matT;//拡大　回転　移動
 			q->Draw(matSRT);
 			//スワップ（バックバッファを表に表示する）
