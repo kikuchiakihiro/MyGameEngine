@@ -5,6 +5,7 @@
 #include "Quad.h"
 #include "Camera.h"
 #include "Texture.h"
+#include "Dice.h"
 //#include <d3d11.h>
 //#pragma comment(lib, "d3d11.lib")
 
@@ -21,7 +22,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //IDXGISwapChain* pSwapChain_;		//スワップチェイン
 //ID3D11RenderTargetView* pRenderTargetView_;	//レンダーターゲットビュー
 
-Quad* q;
+Dice* q;
 
 
 //エントリーポイント
@@ -69,7 +70,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	);
 	
 	
-	q = new Quad;
+	q = new Dice;
 	
 
   //ウィンドウを表示
@@ -107,10 +108,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			//描画処理
 			Direct3D::BeginDraw();
 			static int a=0;
-		    //a += 0;
+		    a += 1;
+
 			XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
 			XMMATRIX matT = XMMatrixTranslation(0.0, 0.0, 0.0);
-			XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
+			XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a/10));
 			XMMATRIX matSRT = matS * matR * matT;//拡大　回転　移動
 			q->Draw(matSRT);
 			//スワップ（バックバッファを表に表示する）
