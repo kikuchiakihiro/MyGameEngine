@@ -107,7 +107,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			//ï`âÊèàóù
 			Direct3D::BeginDraw();
 			static int a=0;
-			a += 0.1f;
+		    //a += 0;
 			XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
 			XMMATRIX matT = XMMatrixTranslation(0.0, 0.0, 0.0);
 			XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));

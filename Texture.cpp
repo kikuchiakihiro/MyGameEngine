@@ -49,7 +49,7 @@ HRESULT Texture::Load(std::string filename)
 
 	return S_OK;
 
-	return S_OK;
+	
 }
 
 void Texture::Release()

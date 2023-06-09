@@ -3,7 +3,7 @@
 #include "Texture.h"
 
 Quad::Quad():
-	pVertexBuffer_(nullptr),pIndexBuffer_(nullptr),pConstantBuffer_(nullptr)
+	pVertexBuffer_(nullptr),pIndexBuffer_(nullptr),pConstantBuffer_(nullptr), pTexture_(nullptr)
 {
 }
 
@@ -72,7 +72,7 @@ HRESULT Quad::Initialize()
 		MessageBox(nullptr, "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
 		return E_FAIL;
 	}
-	pTexture_ = new Texture();
+	pTexture_ = new Texture;
 	pTexture_->Load("Assets\\MicrosoftTeams-image.png");
 
 	return S_OK;
