@@ -4,6 +4,8 @@
 #include "Direct3D.h"
 #include "Quad.h"
 #include "Camera.h"
+#include "Texture.h"
+#include "Quad.h"
 //#include <d3d11.h>
 //#pragma comment(lib, "d3d11.lib")
 
@@ -15,10 +17,10 @@ const char* TITLE_NAME = "サンプルゲーム";
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-//ID3D11Device* pDevice;		//デバイス
-//ID3D11DeviceContext* pContext;		//デバイスコンテキスト
-//IDXGISwapChain* pSwapChain;		//スワップチェイン
-//ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
+//ID3D11Device* pDevice_;		//デバイス
+//ID3D11DeviceContext* pContext_;		//デバイスコンテキスト
+//IDXGISwapChain* pSwapChain_;		//スワップチェイン
+//ID3D11RenderTargetView* pRenderTargetView_;	//レンダーターゲットビュー
 
 Quad* q;
 
@@ -52,9 +54,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	int winW = winRect.right - winRect.left;     //ウィンドウ幅
 	int winH = winRect.bottom - winRect.top;     //ウィンドウ高さ
 
-  //ウィンドウを作成
+	//ウィンドウを作成
 	HWND hWnd = CreateWindow(
-		WIN_CLASS_NAME ,         //ウィンドウクラス名
+		WIN_CLASS_NAME,         //ウィンドウクラス名
 		TITLE_NAME,     //タイトルバーに表示する内容
 		WS_OVERLAPPEDWINDOW, //スタイル（普通のウィンドウ）
 		CW_USEDEFAULT,       //表示位置左（おまかせ）
@@ -66,12 +68,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		hInstance,           //インスタンス
 		NULL                 //パラメータ（なし）
 	);
-	
-	
-	q = new Quad;
-	
 
-  //ウィンドウを表示
+
+	q = new Quad;
+
+
+	//ウィンドウを表示
 	ShowWindow(hWnd, nCmdShow);
 
 	Direct3D::Initialize(winW, winH, hWnd);
@@ -80,10 +82,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		return 0;
 	}
 	Camera::Initialize();
-	
 
-	
-  //メッセージループ（何か起きるのを待つ）
+
+
+	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 	while (msg.message != WM_QUIT)
@@ -105,15 +107,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Camera::Update();
 			//描画処理
 			Direct3D::BeginDraw();
-			static int a=0;
+			static int a = 0;
 			a += 1;
-			XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-			XMMATRIX matT = XMMatrixTranslation(0.0, 0.0, 0.0);
-			XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
+
+			XMMATRIX matS = XMMatrixRotationZ(XMConvertToRadians(a / 15));
+			XMMATRIX matT = XMMatrixRotationY(XMConvertToRadians(a / 15));
+			XMMATRIX matR = XMMatrixRotationX(XMConvertToRadians(a / 20));
 			XMMATRIX matSRT = matS * matR * matT;//拡大　回転　移動
 			q->Draw(matSRT);
 			//スワップ（バックバッファを表に表示する）
-			
+
 			Direct3D::EndDraw();
 		}
 	}
@@ -132,7 +135,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	switch (msg)
 	{
 
-	
+
 
 	case WM_DESTROY:
 		PostQuitMessage(0);  //プログラム終了
