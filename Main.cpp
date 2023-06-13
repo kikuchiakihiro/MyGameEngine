@@ -1,4 +1,3 @@
-//インクルード
 #include <Windows.h>
 #include <iostream>
 #include "Direct3D.h"

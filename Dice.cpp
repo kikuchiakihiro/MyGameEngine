@@ -17,10 +17,10 @@ HRESULT Dice::Initialize()
 	VERTEX vertices[] =
 	{
 		//面１
-	   {XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },  // 前面（左上）0
-	   {XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },  // 前面（右上）1
-	   {XMVectorSet(1.0f, -1.0f, -1.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },  // 前面（右下）2
-	   {XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },  // 前面（左下）3
+	   {XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f),XMVectorSet(0.0f,  0.0f, 0.0f, 0.0f) },  // 前面（左上）0
+	   {XMVectorSet( 1.0f,  1.0f, -1.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },  // 前面（右上）1
+	   {XMVectorSet( 1.0f, -1.0f, -1.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },  // 前面（右下）2
+	   {XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f),XMVectorSet(0.0f,  0.5f, 0.0f, 0.0f) },  // 前面（左下）3
 
 	   //面２
 	   {XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) }, // 上面（左上）4
