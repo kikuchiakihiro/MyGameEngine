@@ -1,7 +1,7 @@
 #include <d3dcompiler.h>
 #include "Direct3D.h"
 #include "Camera.h"
-
+#include "Texture.h"
 
 
 
@@ -10,15 +10,15 @@
 namespace Direct3D
 
 {
-	ID3D11Device* pDevice = nullptr;		//デバイス
-	ID3D11DeviceContext* pContext = nullptr;		//デバイスコンテキスト
-	IDXGISwapChain* pSwapChain = nullptr;		//スワップチェイン
-	ID3D11RenderTargetView* pRenderTargetView = nullptr;	//レンダーターゲットビュー
+	ID3D11Device* pDevice_ = nullptr;		//デバイス
+	ID3D11DeviceContext* pContext_ = nullptr;		//デバイスコンテキスト
+	IDXGISwapChain* pSwapChain_ = nullptr;		//スワップチェイン
+	ID3D11RenderTargetView* pRenderTargetView_ = nullptr;	//レンダーターゲットビュー
 
-	ID3D11VertexShader* pVertexShader = nullptr;	//頂点シェーダー
-	ID3D11PixelShader* pPixelShader = nullptr;		//ピクセルシェーダー
-	ID3D11InputLayout* pVertexLayout = nullptr;	//頂点インプットレイアウト
-	ID3D11RasterizerState* pRasterizerState = nullptr;	//ラスタライザー
+	ID3D11VertexShader* pVertexShader_ = nullptr;	//頂点シェーダー
+	ID3D11PixelShader* pPixelShader_ = nullptr;		//ピクセルシェーダー
+	ID3D11InputLayout* pVertexLayout_ = nullptr;	//頂点インプットレイアウト
+	ID3D11RasterizerState* pRasterizerState_ = nullptr;	//ラスタライザー
 }
 
 
@@ -59,19 +59,19 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
 		0,					// 上の引数でレベルを何個指定したか
 		D3D11_SDK_VERSION,			// SDKのバージョン。必ずこの値
 		&scDesc,				// 上でいろいろ設定した構造体
-		&pSwapChain,				// 無事完成したSwapChainのアドレスが返ってくる
-		&pDevice,				// 無事完成したDeviceアドレスが返ってくる
+		&pSwapChain_,				// 無事完成したSwapChainのアドレスが返ってくる
+		&pDevice_,				// 無事完成したDeviceアドレスが返ってくる
 		&level,					// 無事完成したDevice、Contextのレベルが返ってくる
-		&pContext);
+		&pContext_);
 
 	//スワップチェーンからバックバッファを取得（バックバッファ ＝ レンダーターゲット）
 	ID3D11Texture2D* pBackBuffer;
-	pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+	pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
 	//レンダーターゲットビューを作成
-	
-	pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
-	 
+
+	pDevice_->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView_);
+
 
 
 	//一時的にバックバッファを取得しただけなので解放
@@ -87,9 +87,9 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
 	vp.TopLeftY = 0;	//上
 
 	//データを画面に描画するための一通りの設定（パイプライン）
-	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
-	pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);            // 描画先を設定
-	pContext->RSSetViewports(1, &vp);
+	pContext_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
+	pContext_->OMSetRenderTargets(1, &pRenderTargetView_, nullptr);            // 描画先を設定
+	pContext_->RSSetViewports(1, &vp);
 
 
 	//シェーダー準備
@@ -106,36 +106,37 @@ void Direct3D::InitShader()
 	ID3DBlob* pCompileVS = nullptr;
 	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 	assert(pCompileVS != nullptr);
-	pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
+	pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader_);
 	pCompileVS->Release();
 
 	D3D11_INPUT_ELEMENT_DESC layout[] = {
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標//位置
 	};
-	pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
+	pDevice_->CreateInputLayout(layout, 2, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout_);
 
-	
+
 
 	ID3DBlob* pCompilePS = nullptr;
-	
+
 	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 	assert(pCompilePS != nullptr);
-	pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
+	pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader_);
 	pCompilePS->Release();
 
-	
+
 
 	D3D11_RASTERIZER_DESC rdc = {};
 	rdc.CullMode = D3D11_CULL_BACK;
 	rdc.FillMode = D3D11_FILL_SOLID;
 	rdc.FrontCounterClockwise = FALSE;
-	pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
+	pDevice_->CreateRasterizerState(&rdc, &pRasterizerState_);
 
 	//それぞれをデバイスコンテキストにセット
-	pContext->VSSetShader(pVertexShader, NULL, 0);	//頂点シェーダー
-	pContext->PSSetShader(pPixelShader, NULL, 0);	//ピクセルシェーダー
-	pContext->IASetInputLayout(pVertexLayout);	//頂点インプットレイアウト
-	pContext->RSSetState(pRasterizerState);		//ラスタライザー
+	pContext_->VSSetShader(pVertexShader_, NULL, 0);	//頂点シェーダー
+	pContext_->PSSetShader(pPixelShader_, NULL, 0);	//ピクセルシェーダー
+	pContext_->IASetInputLayout(pVertexLayout_);	//頂点インプットレイアウト
+	pContext_->RSSetState(pRasterizerState_);		//ラスタライザー
 
 }
 //描画開始
@@ -146,7 +147,7 @@ void Direct3D::BeginDraw()
 	float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
 
 	//画面をクリア
-	pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
+	pContext_->ClearRenderTargetView(pRenderTargetView_, clearColor);
 }
 
 
@@ -156,7 +157,7 @@ void Direct3D::BeginDraw()
 void Direct3D::EndDraw()
 
 {
-	pSwapChain->Present(0, 0);
+	pSwapChain_->Present(0, 0);
 }
 
 
@@ -166,26 +167,26 @@ void Direct3D::EndDraw()
 void Direct3D::Release()
 
 {
-	/*pRasterizerState->Release();
-	pVertexLayout->Release();
-	pPixelShader->Release();
-	pVertexShader->Release();*/
+	/*pRasterizerState_->Release();
+	pVertexLayout_->Release();
+	pPixelShader_->Release();
+	pVertexShader_->Release();*/
 
 
-	SAFE_RELEASE(pRasterizerState);
-	SAFE_RELEASE(pVertexLayout);
-	SAFE_RELEASE(pPixelShader);
-	SAFE_RELEASE(pVertexShader);
+	SAFE_RELEASE(pRasterizerState_);
+	SAFE_RELEASE(pVertexLayout_);
+	SAFE_RELEASE(pPixelShader_);
+	SAFE_RELEASE(pVertexShader_);
 
-	/*pRenderTargetView->Release();
-	pSwapChain->Release();
-	pContext->Release();
-	pDevice->Release();*/
+	/*pRenderTargetView_->Release();
+	pSwapChain_->Release();
+	pContext_->Release();
+	pDevice_->Release();*/
 
-	SAFE_RELEASE(pRenderTargetView);
-	SAFE_RELEASE(pSwapChain);
-	SAFE_RELEASE(pContext);
-	SAFE_RELEASE(pDevice);
+	SAFE_RELEASE(pRenderTargetView_);
+	SAFE_RELEASE(pSwapChain_);
+	SAFE_RELEASE(pContext_);
+	SAFE_RELEASE(pDevice_);
 
 
 
