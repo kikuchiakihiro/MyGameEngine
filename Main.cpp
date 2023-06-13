@@ -111,8 +111,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		    a += 1;
 
 			XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-			XMMATRIX matT = XMMatrixTranslation(0.0, 0.0, 0.0);
-			XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a/10));
+			XMMATRIX matT = XMMatrixRotationY(XMConvertToRadians(a / 10));
+			XMMATRIX matR = XMMatrixRotationX(XMConvertToRadians(a/10));
 			XMMATRIX matSRT = matS * matR * matT;//拡大　回転　移動
 			q->Draw(matSRT);
 			//スワップ（バックバッファを表に表示する）
