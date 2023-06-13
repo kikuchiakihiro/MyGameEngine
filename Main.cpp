@@ -5,7 +5,7 @@
 #include "Quad.h"
 #include "Camera.h"
 #include "Texture.h"
-#include "Quad.h"
+//#include "Quad.h"
 //#include <d3d11.h>
 //#pragma comment(lib, "d3d11.lib")
 
