@@ -4,7 +4,7 @@
 #include "Quad.h"
 #include "Camera.h"
 #include "Texture.h"
-#include "Dice.h"
+//#include "Dice.h"
 #include "Sprite.h"
 //#include <d3d11.h>
 //#pragma comment(lib, "d3d11.lib")
@@ -82,6 +82,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		return 0;
 	}
 	Camera::Initialize();
+
 	
 
 	
@@ -107,10 +108,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Camera::Update();
 			//ï`âÊèàóù
 			Direct3D::BeginDraw();
-			static int a=0;
-		    a += 1;
+			/*static int a=0;
+		    a += 1;*/
 
-			XMMATRIX matS = XMMatrixScaling(512.0f/800.f,256.0f/600.f,1.0f);
+			XMMATRIX matS = XMMatrixScaling(512.0f/800.0f,256.0f/600.0f,1.0f);
 			//XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a /15));
 			//XMMATRIX matT = XMMatrixTranslation(2,0,0);
 			//XMMATRIX matSRT = matS ;//ägëÂÅ@âÒì]Å@à⁄ìÆ

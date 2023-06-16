@@ -37,7 +37,7 @@ HRESULT Sprite::Initialize()
 		return E_FAIL;
 	}
 	//インデックス情報
-	int index[] = { 0,1,2, 0,2,3, };
+	int index[] = { 0,2,3, 0,1,2,  };
 
 	D3D11_BUFFER_DESC   bd;
 	bd.Usage = D3D11_USAGE_DEFAULT;
