@@ -22,7 +22,7 @@
 //			
 //	};
 //
-//	// 頂点データ用バッファの設定
+//	 頂点データ用バッファの設定
 //	D3D11_BUFFER_DESC bd_vertex;
 //	bd_vertex.ByteWidth = sizeof(vertices);
 //	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
@@ -37,7 +37,7 @@
 //		MessageBox(nullptr, "頂点バッファの作成に失敗しました", "エラー", MB_OK);
 //		return E_FAIL;
 //	}
-//	//インデックス情報
+//	インデックス情報
 //	int index[] = { 0,1,2, 0,2,3, /*0,3,5 ,3,4,5*/ };
 //
 //	D3D11_BUFFER_DESC   bd;
@@ -57,7 +57,7 @@
 //		return E_FAIL;
 //	}
 //
-//		//コンスタントバッファ作成
+//		コンスタントバッファ作成
 //		D3D11_BUFFER_DESC cb;
 //	cb.ByteWidth = sizeof(CONSTANT_BUFFER);
 //	cb.Usage = D3D11_USAGE_DYNAMIC;
@@ -66,7 +66,7 @@
 //	cb.MiscFlags = 0;
 //	cb.StructureByteStride = 0;
 //
-//	// コンスタントバッファの作成
+//	 コンスタントバッファの作成
 //	if (FAILED(Direct3D::pDevice_->CreateBuffer(&cb, nullptr, &pConstantBuffer_)))
 //	{
 //		MessageBox(nullptr, "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
@@ -80,11 +80,11 @@
 //
 //void Quad::Draw(XMMATRIX& worldMatrix)
 //{
-//	//コンスタントバッファに渡す情報
-//	//XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
-//	//XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点
-//	//XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
-//	//XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列 画角　XM_PIDIV4は45度, アスペクト比,　ニアクリッピング面,　ファークリッピング面
+//	コンスタントバッファに渡す情報
+//	XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
+//	XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点
+//	XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
+//	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列 画角　XM_PIDIV4は45度, アスペクト比,　ニアクリッピング面,　ファークリッピング面
 //	D3D11_MAPPED_SUBRESOURCE pdata;
 //	CONSTANT_BUFFER cb;
 //	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
@@ -105,18 +105,18 @@
 //
 //	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
 //
-//	//頂点バッファ
+//	頂点バッファ
 //	UINT stride = sizeof(VERTEX);
 //	UINT offset = 0;
 //	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 //
-//	// インデックスバッファーをセット
+//	 インデックスバッファーをセット
 //	stride = sizeof(int);
 //	offset = 0;
 //	Direct3D::pContext_->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
 //
 //	
-//	//コンスタントバッファ
+//	コンスタントバッファ
 //	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 //	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 //
