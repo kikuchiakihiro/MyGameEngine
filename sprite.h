@@ -14,14 +14,15 @@ class Sprite
 {
 
 	struct CONSTANT_BUFFER
-		{
-			XMMATRIX	matW;
-		};
-		struct VERTEX
-		{
-			XMVECTOR position;
-			XMVECTOR uv;
-		};
+	{
+		XMMATRIX	matW;
+	};
+	struct VERTEX
+	{
+		XMVECTOR position;
+		XMVECTOR uv;
+	};
+
 protected:
 		ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
 		ID3D11Buffer* pIndexBuffer_;
@@ -38,18 +39,18 @@ public:
 
 private:
 
-	virtual void InitVertexData();
-	HRESULT CreateVertexBuffer();
+	//virtual void InitVertexData();
+	//HRESULT CreateVertexBuffer();
 
-	virtual void InitIndexData();
-	HRESULT CreateIndexBuffer();
+	//virtual void InitIndexData();
+	//HRESULT CreateIndexBuffer();
 
-	HRESULT CreateConstantBuffer();
+	//HRESULT CreateConstantBuffer();
 
-	HRESULT LoadTexture();
+	//HRESULT LoadTexture();
 
-	void PassDataToCB(DirectX::XMMATRIX& worldMatrix);
-	void SetBufferToPipeline();
+	//void PassDataToCB(DirectX::XMMATRIX& worldMatrix);
+	//void SetBufferToPipeline();
 
 };
 

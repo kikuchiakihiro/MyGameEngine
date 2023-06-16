@@ -18,7 +18,7 @@ cbuffer global
 struct VS_OUT
 {
 
-	float4 pos   : SV_POSITION;	//à íu
+	float4 pos  : SV_POSITION;	//à íu
 	float2 uv	: TEXCOORD;	//UVç¿ïW
 
 };
