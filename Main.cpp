@@ -111,11 +111,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			/*static int a=0;
 		    a += 1;*/
 
-			//XMMATRIX matS = XMMatrixScaling(512.0f/800.0f,256.0f/600.0f,1.0f);
+			XMMATRIX matS = XMMatrixScaling(512.0f/800.0f,256.0f/600.0f,1.0f);
 			//XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a /15));
-			XMMATRIX matT = XMMatrixTranslation(2,0,0);
+			//XMMATRIX matT = XMMatrixTranslation(2,0,0);
 			//XMMATRIX matSRT = matS ;//拡大　回転　移動
-			q->Draw(matT);
+			q->Draw(matS);
 			//スワップ（バックバッファを表に表示する）
 			
 			Direct3D::EndDraw();
