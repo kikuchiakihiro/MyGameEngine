@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "Texture.h"
 //#include "Dice.h"
-#include "Sprite.h"
+//#include "Sprite.h"
 //#include <d3d11.h>
 //#pragma comment(lib, "d3d11.lib")
 
@@ -22,7 +22,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //IDXGISwapChain* pSwapChain_;		//スワップチェイン
 //ID3D11RenderTargetView* pRenderTargetView_;	//レンダーターゲットビュー
 
-Sprite* q;
+Quad* q;
 
 
 //エントリーポイント
@@ -70,7 +70,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	);
 	
 	
-	q = new Sprite;
+	q = new Quad;
 	
 
   //ウィンドウを表示
@@ -111,11 +111,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			/*static int a=0;
 		    a += 1;*/
 
-			XMMATRIX matS = XMMatrixScaling(512.0f/800.0f,256.0f/600.0f,1.0f);
+			//XMMATRIX matS = XMMatrixScaling(512.0f/800.0f,256.0f/600.0f,1.0f);
 			//XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a /15));
-			//XMMATRIX matT = XMMatrixTranslation(2,0,0);
+			XMMATRIX matT = XMMatrixTranslation(2,0,0);
 			//XMMATRIX matSRT = matS ;//拡大　回転　移動
-			q->Draw(matS);
+			q->Draw(matT);
 			//スワップ（バックバッファを表に表示する）
 			
 			Direct3D::EndDraw();
