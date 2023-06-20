@@ -130,7 +130,7 @@ HRESULT Dice::Initialize()
 	}
 
 	pTexture_ = new Texture;
-	pTexture_->Load("Assets\\dice.png");
+	pTexture_->Load("Assets\\d.png");
 
 	return S_OK;
 }
@@ -149,6 +149,8 @@ void Dice::Draw(XMMATRIX& worldMatrix)
 	遠い時に設定しないとどこまでも見えてしまうため
 	近い時はある程度カメラとの距離がないと距離を圧縮して表示できなくなるから*/
 	//ニアクリップ面とファークリップ面の距離はなるべく短くする　なぜか距離のずれが生じる　物体が埋まっちゃ足りしてちらつくようになる　<- zファイティング
+	Direct3D::SetShader(SHADER_3D);
+
 
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
