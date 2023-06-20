@@ -13,8 +13,9 @@ class Texture
 public:
 	Texture();
 	~Texture();
-	HRESULT Load(std::string fileName);
+	HRESULT Load(string fileName);
 	void Release();
-	ID3D11SamplerState* GetSampler() { return pSampler_; }
-	ID3D11ShaderResourceView* GetSRV() { return pSRV_; }
+
+	ID3D11SamplerState* GetSampler() { return pSampler_; } //インライン定義
+	ID3D11ShaderResourceView* GetSRV() { return pSRV_; } //インライン定義
 };
