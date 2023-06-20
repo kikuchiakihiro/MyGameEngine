@@ -1,5 +1,5 @@
 #include "Sprite.h"
-
+#include "Camera.h"
 Sprite::Sprite() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr), hr(0), indexNum_(0), vertexNum_(0)
 {
 }
@@ -48,7 +48,7 @@ HRESULT Sprite::Initialize()
 
 void Sprite::Draw(XMMATRIX& worldMatrix)
 {
-	//Direct3D::SetShader(SHADER_2D);
+	Direct3D::SetShader(SHADER_2D);
 
 	PassDataToCB(worldMatrix);
 
