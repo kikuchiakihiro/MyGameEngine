@@ -1,4 +1,3 @@
-//インクルード
 #include <Windows.h>
 #include "Direct3D.h"
 //#include "Quad.h"
@@ -6,6 +5,7 @@
 #include "Dice.h"
 #include "Sprite.h"
 #include "Transform.h"
+
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -102,19 +102,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			//ゲームの処理
 			Direct3D::BeginDraw();
-
 			static float angle = 0;
-			/*angle += 0.05;
-			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0, 3, 0);*/
-			/*Transform diceTrans;
-			diceTrans.position_ = {};
-			diceTrans.rotate_.x = angle;
-			diceTrans.rotate_.y = angle;
-			diceTrans.scale_ = { 1,1,1 };
-			pDice->Draw(diceTrans);*/
+			angle += 0.05;
+			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
 
-			//mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
-			//pSprite->Draw(mat);
+			Transform diceTransform;
+			diceTransform.position_.y = 3.0f;
+			diceTransform.rotate_.y = angle;
+			pDice->Draw(diceTransform);
+
+			////mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
+			Transform spriteTransform;
+			spriteTransform.scale_.x = 512.0f / 800.0f;
+			spriteTransform.scale_.y = 256.0f / 600.0f;
+			//mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
+			pSprite->Draw(spriteTransform);
 
 			Direct3D::EndDraw();
 
