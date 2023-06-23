@@ -189,7 +189,7 @@ void Fbx::Draw(Transform& transform)
 	//SetBufferToPipeline();
 
 	//•`‰æ
-	Direct3D::pContext_->DrawIndexed(, 0, 0);
+	Direct3D::pContext_->DrawIndexed(vertexCount_, 0, 0);
 
 }
 

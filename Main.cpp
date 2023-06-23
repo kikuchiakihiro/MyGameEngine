@@ -5,7 +5,7 @@
 #include "Dice.h"
 #include "Sprite.h"
 #include "Transform.h"
-
+#include "Fbx.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -82,6 +82,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	hr = pDice->Initialize();
 	Sprite* pSprite = new Sprite;
 	hr = pSprite->Initialize();
+	Fbx* pFbx = new Fbx;
+	hr = pFbx->Load("oden.fbx");
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
