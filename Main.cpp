@@ -83,7 +83,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	Sprite* pSprite = new Sprite;
 	hr = pSprite->Initialize();
 	Fbx* pFbx = new Fbx;
-	hr = pFbx->Load("Assets\\oden.fbx");
+	hr = pFbx->Load("Assets\\odden.fbx");
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
