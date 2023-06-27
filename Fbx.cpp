@@ -1,8 +1,9 @@
 #include "Fbx.h"
 #include "Camera.h"
+#include "Texture.h"
 Fbx::Fbx():
-	pVertexBuffer_(nullptr), pIndexBuffer_(nullptr),pConstantBuffer_(nullptr)
-	, vertexCount_(0), polygonCount_(0)
+	pVertexBuffer_(nullptr), pIndexBuffer_(nullptr),pConstantBuffer_(nullptr),pTexture_(nullptr)
+	, vertexCount_(NULL), polygonCount_(NULL)
 {
 }
 
@@ -36,9 +37,12 @@ HRESULT Fbx::Load(std::string fileName)
 
 	polygonCount_ = mesh->GetPolygonCount();	//ポリゴンの数
 
+	materialCount_ = pNode->GetMaterialCount();
+
 	InitVertex(mesh);		//頂点バッファ準備
 	InitIndex(mesh);		//インデックスバッファ準備
 	InitConstant(mesh);     //コンスタントバッファ準備
+	InitMaterial(pNode);
 	//マネージャ解放
 	pFbxManager->Destroy();
 	return S_OK;
@@ -103,7 +107,7 @@ HRESULT Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 
 	D3D11_BUFFER_DESC   bd;
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(int) * index[count];
+	bd.ByteWidth = sizeof(int) * count;
 	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
@@ -144,9 +148,53 @@ HRESULT Fbx::InitConstant(fbxsdk::FbxMesh* mesh)
 	return S_OK;
 }
 
+void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
+{
+	pMaterialList_ = new MATERIAL;
+
+	for (int i = 0; i < materialCount_; i++)
+	{
+		//i番目のマテリアル情報を取得
+		FbxSurfaceMaterial* pMaterial = pNode->GetMaterial(i);
+
+		//テクスチャ情報
+		FbxProperty  lProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
+
+		//テクスチャの数数
+		int fileTextureCount = lProperty.GetSrcObjectCount<FbxFileTexture>();
+
+		//テクスチャあり
+		if (fileTextureCount != 0)
+		{
+			FbxFileTexture* textureInfo = lProperty.GetSrcObject<FbxFileTexture>(0);
+			const char* textureFilePath = textureInfo->GetRelativeFileName();
+
+			char name[_MAX_FNAME];	//ファイル名
+			char ext[_MAX_EXT];	//拡張子
+			_splitpath_s(textureFilePath, nullptr, 0, nullptr, 0, name, _MAX_FNAME, ext, _MAX_EXT);
+			wsprintf(name, "%s%s", name, ext);
+
+			int i = 0;
+			//ファイルからテクスチャ作成
+			pMaterialList_[i].pTexture = new Texture;
+			pMaterialList_[i].pTexture->Load(name);
+		}
+
+		//テクスチャ無し
+		else
+		{
+			pMaterialList_[i].pTexture = nullptr;
+		}
+	}
+	
+}
+
 
 void Fbx::Draw(Transform& transform)
 {
+
+	Direct3D::SetShader(SHADER_3D);
+	transform.Calclation();//トランスフォームを計算
 
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
@@ -155,14 +203,6 @@ void Fbx::Draw(Transform& transform)
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-
-	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
-
-	Direct3D::pContext_->PSSetSamplers(0, 1, &pSampler);
-
-	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
-
-	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
 
 	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
 
@@ -179,9 +219,6 @@ void Fbx::Draw(Transform& transform)
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 
-
-	Direct3D::SetShader(SHADER_3D);
-	transform.Calclation();//トランスフォームを計算
 	////コンスタントバッファに情報を渡す
 	//PassDataToCB(transform);
 
@@ -205,7 +242,7 @@ HRESULT Fbx::LoadTexture()
 	pTexture_ = new Texture;
 
 	HRESULT hr;
-	hr = pTexture_->Load("Assets\\oden.png");
+	hr = pTexture_->Load("Assets\\odden.png");
 	if (FAILED(hr))
 	{
 		MessageBox(NULL, "テクスチャの作成に失敗しました", "エラー", MB_OK);
