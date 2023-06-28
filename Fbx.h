@@ -4,7 +4,7 @@
 #include <fbxsdk.h>
 #include <string>
 #include "Transform.h"
-
+#include <vector>
 
 #pragma comment(lib, "LibFbxSDK-MD.lib")
 #pragma comment(lib, "LibXml2-MD.lib")
@@ -19,6 +19,7 @@ class Fbx
 	struct MATERIAL
 	{
 		Texture* pTexture;
+		XMFLOAT4	diffuse;
 	};
 
 	struct CONSTANT_BUFFER
@@ -31,16 +32,18 @@ class Fbx
 	{
 		XMVECTOR position;
 		XMVECTOR uv;
+		XMVECTOR normal;
 	};
 
 	int vertexCount_;	//頂点数
 	int polygonCount_;	//ポリゴン数
 	int materialCount_;	//マテリアルの個数
-
+	int *indexCount_;
 	ID3D11Buffer* pVertexBuffer_;
 	ID3D11Buffer** pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
 	MATERIAL* pMaterialList_;
+	
 
 	void InitVertex(fbxsdk::FbxMesh* mesh);
 	void InitIndex(fbxsdk::FbxMesh* mesh);
