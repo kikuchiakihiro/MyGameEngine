@@ -238,7 +238,7 @@ void Fbx::Draw(Transform& transform)
 		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 		
 		if (i == 1) {
-			cb.diffuseColor = XMFLOAT4(1.5, 1.2, 1.06, 1);
+			cb.diffuseColor = XMFLOAT4(1, 1, 1, 1);
 			cb.isTextured = pMaterialList_[i].pTexture != nullptr;
 		}
 			
