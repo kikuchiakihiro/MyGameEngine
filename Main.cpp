@@ -2,11 +2,13 @@
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
-
+#include "ROOTJOB.H"
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const int WINDOW_WIDTH = 800;  //ウィンドウの幅
 const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
+
+RootJob* pRootJob = nullptr;
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
