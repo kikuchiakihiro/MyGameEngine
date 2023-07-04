@@ -125,21 +125,26 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			//mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
 			//pSprite->Draw(spriteTransform);
 
-			Transform odenTransform;
+			static Transform odenTransform;
 			odenTransform.position_.y = -1.0f;
 			odenTransform.rotate_.y = angle;
-			pFbx->Draw(odenTransform);
+			
 
-			if (Input::IsKeyUp(DIK_ESCAPE))
+			if (Input::IsKey(DIK_LEFT))
 			{
-				static int cnt = 0;
+				odenTransform.position_.x -=0.01;
+				/*static int cnt = 0;
 				cnt++;
 				if (cnt >= 3)
 				{
 					PostQuitMessage(0);
-				}
+				}*/
 			}
-
+			if (Input::IsKey(DIK_RIGHT))
+			{
+				odenTransform.position_.x += 0.01;
+			}
+			pFbx->Draw(odenTransform);
 			Direct3D::EndDraw();
 
 		}
