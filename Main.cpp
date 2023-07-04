@@ -74,7 +74,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	
 	pRootJob = new RootJob;
 
-	RootJob->Initialize();
+	pRootJob->Initialize();
 
 	
 

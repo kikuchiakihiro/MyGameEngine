@@ -3,6 +3,7 @@
 class RootJob :
 	public GameObject
 {
+public:
 	RootJob() {};
 	~RootJob() {};
 		void	Initialize() override;
