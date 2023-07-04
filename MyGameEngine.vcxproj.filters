@@ -51,7 +51,7 @@
     <ClCompile Include="Engine\GameObject.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="RootJob.cpp">
+    <ClCompile Include="Engine\RootJob.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Transform.h">
@@ -91,7 +90,7 @@
     <ClInclude Include="Engine\GameObject.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="RootJob.h">
+    <ClInclude Include="Engine\RootJob.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>
