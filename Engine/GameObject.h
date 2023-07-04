@@ -1,23 +1,25 @@
 #pragma once
 
 #include "Transform.h"
-#include œœœœœ
-#include œœœœœ
+#include <string>
+//#include <list>
 
+using std::string;
+//using std::list;
 class GameObject
 {
-	œœœœœœœœ childList_;
-	Transform	transform_;
-	œœœœœœ	pParent_;
-	œœœœœœ	objectName_;
+	//list <GameObject>	childList_;
+	Transform			transform_;
+	GameObject*			pParent_;
+	string				objectName_;
 
 public:
 	GameObject();
 	GameObject(GameObject* parent, const std::string& name);
 	~GameObject();
 
-	œœœœ void Initialize() œœœ;
-	œœœœ void Update() œœœ;
-	œœœœ void Draw() œœœ;
-	œœœœ void Release() œœœ;
+	virtual  void Initialize() =0;
+	virtual  void Update() =0;
+	virtual  void Draw() =0;
+	virtual  void Release()=0;
 };
