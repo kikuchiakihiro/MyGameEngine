@@ -1,3 +1,4 @@
+//インクルード
 #include <Windows.h>
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
@@ -13,7 +14,6 @@ RootJob* pRootJob = nullptr;
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
 
 
 
@@ -68,15 +68,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		PostQuitMessage(0); //エラー起きたら強制終了
 	}
 
+	//カメラの初期化
+	Camera::Initialize();
+
+	//DirectInputの初期化
 	Input::Initialize(hWnd);
 
-	Camera::Initialize();
-	
 	pRootJob = new RootJob;
-
 	pRootJob->Initialize();
 
-	
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
@@ -89,29 +89,28 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		
+
 		//メッセージなし
 		else
 		{
+
+			//▼ゲームの処理
+			//カメラの更新
 			Camera::Update();
 
-			//ゲームの処理
-			Direct3D::BeginDraw();
-			static float angle = 0;
-			angle += 0.05;
-			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
-
+			//入力の処理
 			Input::Update();
+			pRootJob->Update();
 
-			
+			//▼描画
+			Direct3D::BeginDraw();
 
+			//ルートジョブから、すべてのオブジェクトのドローを呼ぶ
 
 			Direct3D::EndDraw();
-
 		}
-		
 	}
-	
+	pRootJob->Release();
 	Input::Release();
 	Direct3D::Release();
 
@@ -123,10 +122,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-	case WM_MOUSEMOVE:
-		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
+	case WM_DESTROY:
+		PostQuitMessage(0);  //プログラム終了
 		return 0;
 	}
-	
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
