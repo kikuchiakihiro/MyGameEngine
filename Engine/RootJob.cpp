@@ -12,18 +12,23 @@ RootJob::~RootJob()
 
 void RootJob::Initialize()
 {
-	PlayScene* pPlayScene;
+	Instantiate<PlayScene>(this);
+	/*PlayScene* pPlayScene;
 	pPlayScene = new PlayScene(this);
 	pPlayScene->Initialize();
-	childList_.push_back(pPlayScene);
+	childList_.push_back(pPlayScene);*/
 }
+
 
 void RootJob::Update()
 {
+	
 }
 
 void RootJob::Draw()
 {
+	/*for (auto& e : childList_)
+		e->Draw();*/
 }
 
 void RootJob::Release()
