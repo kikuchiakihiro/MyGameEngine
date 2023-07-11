@@ -8,7 +8,7 @@ PlayScene::PlayScene(GameObject* parent)
 
 void PlayScene::Initialize()
 {
-	Instantiate<Player>(this);
+	GameObject * pPlayer = Instantiate<Player>(this);
 	
 	//Player* pPlayer;
 	//pPlayer = new Player(this);//プレイヤーの親は、自分

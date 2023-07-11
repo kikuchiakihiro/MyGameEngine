@@ -13,25 +13,28 @@ GameObject::~GameObject()
 }
 
 // íœ‚·‚é‚©‚Ç‚¤‚©
-bool GameObject::IsDead()
-{
-	return (state_.dead != 0);
-}
+//bool GameObject::IsDead()
+//{
+//	return (state_.dead != 0);
+//}
 
 // Ž©•ª‚ðíœ‚·‚é
 void GameObject::KillMe()
 {
-	state_.dead = 1;
+	IsDead = true;
 }
 
 
 void GameObject::UpdateSub()
 {
 	Update();
-	for (auto itr = childList_.begin(); itr != childList_.end(); )
+	for (auto itr = childList_.begin(); itr != childList_.end();itr++ )
 	{
 		(*itr)->UpdateSub();
-		if ((*itr)->IsDead() == true)
+	}
+	for (auto itr = childList_.begin(); itr != childList_.end();)
+	{
+		if ((*itr)->IsDead == true)
 		{
 			ReleaseSub();
 			SAFE_DELETE(*itr);
@@ -41,8 +44,6 @@ void GameObject::UpdateSub()
 			itr++;
 		}
 	}
-
-
 }
 
 void GameObject::DrawSub()

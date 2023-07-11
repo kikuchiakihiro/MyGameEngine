@@ -8,7 +8,7 @@ void Player2::Initialize()
 {
 
 	pFbx = new Fbx;
-	pFbx->Load("Assets\\Ball1.fbx");
+	pFbx->Load("Assets\\odden.fbx");
 	this->transform_.position_.x = -5.0f;
 	this->transform_.scale_.x = 0.2f;
 	this->transform_.scale_.y = 0.2f;

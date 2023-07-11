@@ -21,7 +21,7 @@ void Player::Update()
 {
 	transform_.rotate_.y++;
 
-	if (Input::IsKey(DIK_ESCAPE)) {
+	if (Input::IsKeyDown(DIK_ESCAPE)) {
 		KillMe();
 	}
 }
