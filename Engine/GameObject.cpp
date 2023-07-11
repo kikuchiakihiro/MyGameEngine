@@ -1,5 +1,5 @@
 #include "GameObject.h"
-
+#include "Direct3D.h"
 GameObject::GameObject()
 {
 }
@@ -12,11 +12,37 @@ GameObject::~GameObject()
 {
 }
 
+// íœ‚·‚é‚©‚Ç‚¤‚©
+bool GameObject::IsDead()
+{
+	return (state_.dead != 0);
+}
+
+// Ž©•ª‚ðíœ‚·‚é
+void GameObject::KillMe()
+{
+	state_.dead = 1;
+}
+
+
 void GameObject::UpdateSub()
 {
 	Update();
-	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
+	for (auto itr = childList_.begin(); itr != childList_.end(); )
+	{
 		(*itr)->UpdateSub();
+		if ((*itr)->IsDead() == true)
+		{
+			ReleaseSub();
+			SAFE_DELETE(*itr);
+			itr = childList_.erase(itr);
+		}
+		else {
+			itr++;
+		}
+	}
+
+
 }
 
 void GameObject::DrawSub()
@@ -32,3 +58,5 @@ void GameObject::ReleaseSub()
 	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 		(*itr)->ReleaseSub();
 }
+
+

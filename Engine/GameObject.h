@@ -11,7 +11,7 @@ class GameObject
 protected:
 	list<GameObject*>	childList_;
 	Transform			transform_;
-	GameObject* pParent_;
+	GameObject*			pParent_;
 	string				objectName_;
 
 public:
@@ -26,13 +26,30 @@ public:
 			void DrawSub();
 	virtual void Release() = 0;
 			void ReleaseSub();
-	template <class T>
-	void Instantiate(GameObject* parent)
+
+			bool IsDead();
+			void KillMe();
+
+			template <class T>
+			void Instantiate(GameObject* parent)
+			{
+				T* p;
+				p = new T(parent);
+				p->Initialize();
+				parent->childList_.push_back(p);
+			}
+private:
+	//フラグ
+	struct OBJECT_STATE
 	{
-		T* p;
-		p = new T(parent);
-		p->Initialize();
-		parent->childList_.push_back(p);
-	}
+		//unsigned initialized : 1;	//初期化済みか
+		//unsigned entered : 1;		//更新するか
+		//unsigned visible : 1;		//描画するか
+		unsigned dead : 1;			//削除するか
+	};
+	OBJECT_STATE state_;
+
+
+	
 
 };

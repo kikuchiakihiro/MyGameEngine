@@ -1,10 +1,14 @@
 //インクルード
 #include <Windows.h>
+#include <stdlib.h>
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
+#include "Player.h"
 
+
+#pragma comment(lib, "winmm.lib")
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const int WINDOW_WIDTH = 800;  //ウィンドウの幅
@@ -93,6 +97,33 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		//メッセージなし
 		else
 		{
+			
+			timeBeginPeriod(1);
+
+			static DWORD countFps = 0;
+			static DWORD startTime = timeGetTime();
+			DWORD nowTime = timeGetTime();
+			static DWORD lastUpdateTime = nowTime;
+
+			if (nowTime - startTime >= 1000)
+			{
+				char str[16];
+				wsprintf(str, "%u", countFps);
+				SetWindowText(hWnd, str);
+
+				countFps = 0;
+				startTime = nowTime;
+
+			}
+			if (nowTime - lastUpdateTime <= 1000.0f / 60)
+			{
+				continue;
+			}
+			lastUpdateTime = nowTime;
+
+			countFps++;
+
+			timeEndPeriod(1);
 
 			//▼ゲームの処理
 			//カメラの更新
