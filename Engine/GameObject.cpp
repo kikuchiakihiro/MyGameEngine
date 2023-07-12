@@ -4,8 +4,11 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(GameObject* parent, const std::string& name): pParent_(nullptr)
+GameObject::GameObject(GameObject* parent, const std::string& name): pParent_(nullptr),
+objectName_(name),IsDead(false)
 {
+	if (parent != nullptr)
+		this->transform_.pParent_ = &(parent->transform_);
 }
 
 GameObject::~GameObject()
@@ -59,5 +62,20 @@ void GameObject::ReleaseSub()
 	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 		(*itr)->ReleaseSub();
 }
+
+void GameObject::SetScale(XMFLOAT3 scl_)
+{
+	transform_.scale_ = scl_;
+}
+
+void GameObject::SetPosition(XMFLOAT3 pos_)
+{
+	transform_.position_ = pos_;
+}
+
+
+
+
+
 
 

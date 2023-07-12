@@ -27,6 +27,8 @@ public:
 	virtual void Release() = 0;
 			void ReleaseSub();
 
+			void SetScale(XMFLOAT3 scl_);
+			void SetPosition(XMFLOAT3 pos_);
 			//bool IsDead();
 			bool IsDead;
 			void KillMe();
