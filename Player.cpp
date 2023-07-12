@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "Player2.h"
-
 #include "Engine/Input.h"
 
 Player::Player(GameObject* parent):GameObject(parent,"Player"),pFbx(nullptr)
