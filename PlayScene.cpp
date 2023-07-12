@@ -1,5 +1,6 @@
 #include "PlayScene.h"
 #include "Player.h"
+#include "Player2.h"
 
 PlayScene::PlayScene(GameObject* parent)
 {
@@ -7,7 +8,8 @@ PlayScene::PlayScene(GameObject* parent)
 
 void PlayScene::Initialize()
 {
-	Instantiate<Player>(this);
+	GameObject * pPlayer = Instantiate<Player>(this);
+	
 	//Player* pPlayer;
 	//pPlayer = new Player(this);//プレイヤーの親は、自分
 	//pPlayer->Initialize();

@@ -27,27 +27,31 @@ public:
 	virtual void Release() = 0;
 			void ReleaseSub();
 
-			bool IsDisappear();
-	template <class T>
-	void Instantiate(GameObject* parent)
-	{
-		T* p;
-		p = new T(parent);
-		p->Initialize();
-		parent->childList_.push_back(p);
-	}
+			//bool IsDead();
+			bool IsDead;
+			void KillMe();
+
+			template <class T>
+			GameObject* Instantiate(GameObject* parent)
+			{
+				T* pObject;
+				pObject = new T(parent);
+				pObject->Initialize();
+				parent->childList_.push_back(pObject);
+				return pObject;
+			}
 private:
 	//フラグ
-	struct OBJECT_STATE
-	{
-		unsigned initialized : 1;	//初期化済みか
-		unsigned entered : 1;		//更新するか
-		unsigned visible : 1;		//描画するか
-		unsigned dead : 1;			//削除するか
-	};
-	OBJECT_STATE state_;
+	//struct OBJECT_STATE
+	//{
+	//	unsigned initialized : 1;	//初期化済みか
+	//	//unsigned entered : 1;		//更新するか
+	//	//unsigned visible : 1;		//描画するか
+	//	unsigned dead : 1;			//削除するか
+	//};
+	//OBJECT_STATE state_;
+
 
 	
-
 
 };
