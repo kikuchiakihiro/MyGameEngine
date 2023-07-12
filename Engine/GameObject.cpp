@@ -1,15 +1,16 @@
 #include "GameObject.h"
 #include "Direct3D.h"
-GameObject::GameObject()
+GameObject::GameObject():pParent_(nullptr)
 {
 }
 
-GameObject::GameObject(GameObject* parent, const std::string& name): pParent_(nullptr),
+GameObject::GameObject(GameObject* parent, const std::string& name): pParent_(parent),
 objectName_(name),IsDead(false)
 {
 	if (parent != nullptr)
 		this->transform_.pParent_ = &(parent->transform_);
 }
+
 
 GameObject::~GameObject()
 {
@@ -58,9 +59,13 @@ void GameObject::DrawSub()
 
 void GameObject::ReleaseSub()
 {
-	Release();
-	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
+
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++) {
 		(*itr)->ReleaseSub();
+		
+
+	}
+	Release();
 }
 
 void GameObject::SetScale(XMFLOAT3 scl_)

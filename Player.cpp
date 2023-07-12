@@ -25,10 +25,12 @@ void Player::Initialize()
 void Player::Update()
 {
 	transform_.rotate_.y++;
-
-	if (Input::IsKeyDown(DIK_ESCAPE)) {
+	if (transform_.rotate_.y > 600) {
 		KillMe();
 	}
+	/*if (Input::IsKeyDown(DIK_ESCAPE)) {
+		KillMe();
+	}*/
 }
 
 void Player::Draw()
@@ -39,6 +41,7 @@ void Player::Draw()
 
 void Player::Release()
 {
-	pFbx->Release();
-	delete pFbx;
+	//pFbx->Release();
+	//SAFE_RELEASE(pFbx);
+	////delete pFbx;
 }

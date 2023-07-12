@@ -17,7 +17,10 @@ void Player2::Initialize()
 
 void Player2::Update()
 {
-	//transform_.rotate_.y++;
+	transform_.rotate_.y++;
+	if (transform_.rotate_.y > 300) {
+		KillMe();
+	}
 }
 
 void Player2::Draw()
@@ -27,6 +30,6 @@ void Player2::Draw()
 
 void Player2::Release()
 {
-	pFbx->Release();
-	delete pFbx;
+	/*pFbx->Release();
+	delete pFbx;*/
 }

@@ -4,7 +4,8 @@
 
 //‘O•ûéŒ¾
 class Fbx;
-
+#define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;} //ŠJ•úˆ—
+#define SAFE_RELEASE(p) if(p != nullptr){ p->Release(); p = nullptr;} //ŠJ•úˆ—
 class Player :
     public GameObject
 {

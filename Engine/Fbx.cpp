@@ -229,7 +229,7 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
 void Fbx::Draw(Transform& transform)
 {
 	Direct3D::SetShader(SHADER_3D);
-	transform.Calclation();//トランスフォームを計算
+	transform.Calculation();//トランスフォームを計算
 	//コンスタントバッファに情報を渡す
 	for (int i = 0; i < materialCount_; i++)
 	{

@@ -6,7 +6,8 @@ Transform::Transform() :
     matScale_(XMMatrixIdentity()),
     position_(XMFLOAT3(0, 0, 0)),
     rotate_(XMFLOAT3(0, 0, 0)),
-    scale_(XMFLOAT3(1, 1, 1))
+    scale_(XMFLOAT3(1, 1, 1)),
+    pParent_(nullptr)
 {
 }
 
@@ -14,7 +15,7 @@ Transform::~Transform()
 {
 }
 
-void Transform::Calclation()
+void Transform::Calculation()
 {
    
     matTranslate_ = XMMatrixTranslation(position_.x, position_.y, position_.z);
