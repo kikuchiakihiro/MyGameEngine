@@ -1,14 +1,16 @@
 #include "Player2.h"
+#include "Engine/Model.h"
 
-Player2::Player2(GameObject* parent) :GameObject(parent, "Player2"), pFbx(nullptr)
+
+Player2::Player2(GameObject* parent) :GameObject(parent, "Player2"), pFbx(nullptr),hModel_(-1)
 {
 }
 
 void Player2::Initialize()
 {
 
-	pFbx = new Fbx;
-	pFbx->Load("Assets\\odden.fbx");
+	//pFbx = new Fbx;
+	hModel_ = Model::Load("Assets\\odden.fbx");
 	this->transform_.position_.x = -5.0f;
 	this->transform_.scale_.x = 0.2f;
 	this->transform_.scale_.y = 0.2f;
@@ -30,7 +32,8 @@ void Player2::Update()
 
 void Player2::Draw()
 {
-	pFbx->Draw(transform_);
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
 }
 
 void Player2::Release()

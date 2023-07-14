@@ -6,7 +6,7 @@
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
 #include "Player.h"
-
+#include "Engine/Model.h"
 
 #pragma comment(lib, "winmm.lib")
 //定数宣言
@@ -15,7 +15,7 @@ const int WINDOW_WIDTH = 800;  //ウィンドウの幅
 const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 RootJob* pRootJob = nullptr;
-
+ 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -144,6 +144,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Direct3D::EndDraw();
 		}
 	}
+	Model::Release();
 	pRootJob->ReleaseSub();
 	Input::Release();
 	Direct3D::Release();

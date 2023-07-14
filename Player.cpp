@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Player2.h"
 #include "Engine/Input.h"
+#include "Engine/Model.h"
 
 Player::Player(GameObject* parent):GameObject(parent,"Player"),pFbx(nullptr)
 {
@@ -10,8 +11,8 @@ void Player::Initialize()
 {
 	
 
-	pFbx = new Fbx;
-	pFbx->Load("Assets\\odden.fbx");
+	
+	hModel_ = Model::Load("Assets\\odden.fbx");
 	//this->transform_.position_.x = -2.0f;
 	this->transform_.scale_.x = 0.8f;
 	this->transform_.scale_.y = 0.8f;
@@ -43,7 +44,8 @@ void Player::Update()
 
 void Player::Draw()
 {
-	pFbx->Draw(transform_);
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
 
 }
 
