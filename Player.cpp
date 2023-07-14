@@ -17,20 +17,27 @@ void Player::Initialize()
 	this->transform_.scale_.y = 0.8f;
 	this->transform_.scale_.z = 0.8f;
 
-	Instantiate<Player2>(this);
+	/*Instantiate<Player2>(this);
 	GameObject* pCO2 = Instantiate<Player2>(this);
-	pCO2->SetPosition(XMFLOAT3(5, 0, 0));
+	pCO2->SetPosition(XMFLOAT3(5, 0, 0));*/
 }
 
 void Player::Update()
 {
 	transform_.rotate_.y++;
-	if (transform_.rotate_.y > 600) {
-		KillMe();
-	}
-	/*if (Input::IsKeyDown(DIK_ESCAPE)) {
+	/*if (transform_.rotate_.y > 600) {
 		KillMe();
 	}*/
+	if (Input::IsKey(DIK_LEFT)) {
+		transform_.position_.x -= 0.1f;
+	}
+	if (Input::IsKey(DIK_RIGHT)) {
+		transform_.position_.x += 0.1f;
+	}
+	if (Input::IsKey(DIK_SPACE)) {
+		GameObject* pBullet = Instantiate<Player2>(pParent_);
+			pBullet->SetPosition(transform_.position_);
+	}
 }
 
 void Player::Draw()

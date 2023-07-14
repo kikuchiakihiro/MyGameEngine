@@ -62,8 +62,6 @@ void GameObject::ReleaseSub()
 
 	for (auto itr = childList_.begin(); itr != childList_.end(); itr++) {
 		(*itr)->ReleaseSub();
-		
-
 	}
 	Release();
 }

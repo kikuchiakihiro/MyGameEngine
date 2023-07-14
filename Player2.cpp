@@ -17,10 +17,15 @@ void Player2::Initialize()
 
 void Player2::Update()
 {
-	transform_.rotate_.y++;
-	if (transform_.rotate_.y > 300) {
+	transform_.rotate_.x = 90.0f;
+	transform_.position_.z += 0.5f;
+	if (transform_.position_.z > 20) {
 		KillMe();
 	}
+	//transform_.rotate_.x++;
+	/*if (transform_.rotate_.y > 300) {
+		KillMe();
+	}*/
 }
 
 void Player2::Draw()
