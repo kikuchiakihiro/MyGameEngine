@@ -34,7 +34,8 @@ void Player::Update()
 	if (Input::IsKey(DIK_RIGHT)) {
 		transform_.position_.x += 0.1f;
 	}
-	if (Input::IsKey(DIK_SPACE)) {
+	
+	if (Input::IsKeyDown(DIK_SPACE)) {
 		GameObject* pBullet = Instantiate<Player2>(pParent_);
 			pBullet->SetPosition(transform_.position_);
 	}
