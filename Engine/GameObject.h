@@ -33,6 +33,10 @@ public:
 			bool IsDead;
 			void KillMe();
 
+			GameObject* FindChildObject(string _objName);
+			GameObject* GetRootJob();
+			GameObject* FindObject(string _objName);
+
 			template <class T>
 			GameObject* Instantiate(GameObject* parent)
 			{
@@ -42,6 +46,9 @@ public:
 				parent->childList_.push_back(pObject);
 				return pObject;
 			}
+
+
+
 private:
 	//ƒtƒ‰ƒO
 	//struct OBJECT_STATE

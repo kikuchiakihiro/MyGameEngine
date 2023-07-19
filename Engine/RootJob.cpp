@@ -13,7 +13,7 @@ RootJob::~RootJob()
 
 void RootJob::Initialize()
 {
-	Instantiate<SceneManager>(this)
+	Instantiate<SceneManager>(this);
 	//Instantiate<PlayScene>(this);
 	/*PlayScene* pPlayScene;
 	pPlayScene = new PlayScene(this);

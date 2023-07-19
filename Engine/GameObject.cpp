@@ -29,6 +29,8 @@ void GameObject::KillMe()
 }
 
 
+
+
 void GameObject::UpdateSub()
 {
 	Update();
@@ -74,6 +76,39 @@ void GameObject::SetScale(XMFLOAT3 scl_)
 void GameObject::SetPosition(XMFLOAT3 pos_)
 {
 	transform_.position_ = pos_;
+}
+
+GameObject* GameObject::FindChildObject(string _objName)
+{
+	if (_objName == this->objectName_) {
+		return(this);
+	}
+	else {
+		//for (auto itr = childList_.begin(); itr != childList_.end(); itr++) 
+		for(auto itr: childList_)
+		{
+			GameObject* obj = itr->FindChildObject(_objName);
+			if (obj != nullptr)
+				return obj;
+		}
+	}
+	return nullptr;
+}
+/// <summary>
+///		再帰呼び出しでROOTJOB探して返すやーつ
+/// </summary>
+/// <returns></returns>RootJobのアドレス
+GameObject* GameObject::GetRootJob()
+{
+	if (pParent_ == nullptr)
+		return this;
+
+	return pParent_->GetRootJob();
+}
+
+GameObject* GameObject::FindObject(string _objName)
+{
+	return GetRootJob()->FindChildObject(_objName);
 }
 
 
