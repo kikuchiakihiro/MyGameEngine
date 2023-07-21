@@ -17,7 +17,7 @@ protected:
 	Transform			transform_;
 	GameObject*			pParent_;
 	string				objectName_;
-	SphereCollider*		pCollider;
+	SphereCollider*		pCollider_;
 
 public:
 	GameObject();

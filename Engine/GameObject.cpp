@@ -1,6 +1,8 @@
 #include "GameObject.h"
 #include "Direct3D.h"
-GameObject::GameObject():pParent_(nullptr)
+#include "Transform.h"
+#include "SphereCollider.h"
+GameObject::GameObject():pParent_(nullptr),pCollider_(nullptr),IsDead(false)
 {
 }
 
@@ -34,6 +36,9 @@ void GameObject::KillMe()
 void GameObject::UpdateSub()
 {
 	Update();
+
+	RoundRobin(GetRootJob());
+
 	for (auto itr = childList_.begin(); itr != childList_.end();itr++ )
 	{
 		(*itr)->UpdateSub();
@@ -109,6 +114,47 @@ GameObject* GameObject::GetRootJob()
 GameObject* GameObject::FindObject(string _objName)
 {
 	return GetRootJob()->FindChildObject(_objName);
+}
+
+void GameObject::AddCollider(SphereCollider* pCollider)
+{
+	this->pCollider_ = pCollider;
+}
+
+void GameObject::Collision(GameObject* pTarget)
+{
+	if (pTarget == this || pTarget->pCollider_ == nullptr) {
+		return;
+	}
+
+	/*XMVECTOR v{ transform_.position_.x - pTarget->transform_.position_.x,
+				transform_.position_.y - pTarget->transform_.position_.y,
+				transform_.position_.z - pTarget->transform_.position_.z,
+				0};
+	XMVECTOR dist = XMVector3Dot(v, v);*/
+
+	float dist = (transform_.position_.x - pTarget->transform_.position_.x) * (transform_.position_.x - pTarget->transform_.position_.x)
+		+ (transform_.position_.y - pTarget->transform_.position_.y) * (transform_.position_.y - pTarget->transform_.position_.y)
+		+ (transform_.position_.z - pTarget->transform_.position_.z) * (transform_.position_.z - pTarget->transform_.position_.z);
+	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius() * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()));
+
+	if (dist <= rDist) {
+		double p = 0;
+	}
+
+}
+
+void GameObject::RoundRobin(GameObject* pTarget)
+{
+	if (pCollider_ == nullptr) 
+		return;
+	
+	if (pTarget->pCollider_ != nullptr) 
+		Collision(pTarget);
+	
+	for (auto itr = pTarget->childList_.begin(); itr != pTarget->childList_.end(); itr++)
+		RoundRobin(*itr);
+	
 }
 
 

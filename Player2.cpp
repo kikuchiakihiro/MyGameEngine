@@ -1,6 +1,6 @@
 #include "Player2.h"
 #include "Engine/Model.h"
-
+#include "Engine/SphereCollider.h"
 
 Player2::Player2(GameObject* parent) :GameObject(parent, "Player2"), pFbx(nullptr),hModel_(-1)
 {
@@ -15,6 +15,9 @@ void Player2::Initialize()
 	this->transform_.scale_.x = 0.2f;
 	this->transform_.scale_.y = 0.2f;
 	this->transform_.scale_.z = 0.2f;
+
+	SphereCollider* col = new SphereCollider(1.0);
+	AddCollider(col);
 }
 
 void Player2::Update()
