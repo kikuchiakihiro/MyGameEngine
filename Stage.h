@@ -1,10 +1,24 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+enum
+{
+    TYPE_FLOOR,
+    TYPE_WL,
+    TYPE_MAX
+};
+
+
+
+
+
 //◆◆◆を管理するクラス
 class Stage : public GameObject
 {
-    int hModel_;    //モデル番号
+    int hModel_;
+    int** table_;
+    int x, z;
+
 public:
     //コンストラクタ
     Stage(GameObject* parent);
@@ -23,4 +37,6 @@ public:
 
     //開放
     void Release() override;
+
+    bool IsWall(int x, int z);
 };
