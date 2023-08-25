@@ -139,10 +139,16 @@ void GameObject::Collision(GameObject* pTarget)
 	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius() * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()));
 
 	if (dist <= rDist) {
-		double p = 0;
+		//double p = 0;
+		OnCollision(pTarget);
 	}
 
 }
+void GameObject::OnCollision(GameObject* pTarget)
+{
+
+}
+
 
 void GameObject::RoundRobin(GameObject* pTarget)
 {
@@ -152,6 +158,9 @@ void GameObject::RoundRobin(GameObject* pTarget)
 	if (pTarget->pCollider_ != nullptr) 
 		Collision(pTarget);
 	
+	if (pTarget->pCollider_ != nullptr)
+		OnCollision(pTarget);
+
 	for (auto itr = pTarget->childList_.begin(); itr != pTarget->childList_.end(); itr++)
 		RoundRobin(*itr);
 	

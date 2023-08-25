@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "Engine/Model.h"
 #include "Engine/SphereCollider.h"
-Enemy::Enemy(GameObject* parent):GameObject(parent,"Enemy")
+Enemy::Enemy(GameObject* parent):GameObject(parent,"Enemy"), hModel_(-1)
 {
 }
 
@@ -19,6 +19,7 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
+
 }
 
 void Enemy::Draw()
@@ -30,3 +31,10 @@ void Enemy::Draw()
 void Enemy::Release()
 {
 }
+
+void Enemy::OnCollision(GameObject* pTarget)
+{
+	
+}
+
+

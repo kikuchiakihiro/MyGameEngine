@@ -36,3 +36,7 @@ void RootJob::Draw()
 void RootJob::Release()
 {
 }
+
+void RootJob::OnCollision(GameObject* pTarget)
+{
+}
