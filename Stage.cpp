@@ -30,8 +30,7 @@ void Stage::Update()
 //•`‰æ
 void Stage::Draw()
 {
-    Transform BlockTrans;//TransformŒ^‚Ì•Ï”‚ğì‚é
-    //TransformŒ^‚ÍAˆÊ’uŒü‚«‘å‚«‚³‚È‚Ç‚ğˆµ‚¤Œ^
+    
 
     Transform blockTrans;
 
