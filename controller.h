@@ -2,15 +2,15 @@
 #include "Engine/GameObject.h"
 
 //◆◆◆を管理するクラス
-class controller : public GameObject
+class Controller : public GameObject
 {
-    int camType_;
+
 public:
     //コンストラクタ
-    controller(GameObject* parent);
+    Controller(GameObject* parent);
 
     //デストラクタ
-    ~controller();
+    ~Controller();
 
     //初期化
     void Initialize() override;
