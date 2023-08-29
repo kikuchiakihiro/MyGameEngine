@@ -4,7 +4,8 @@
 //◆◆◆を管理するクラス
 class Controller : public GameObject
 {
-
+    int speedx;
+    int speedy;
 public:
     //コンストラクタ
     Controller(GameObject* parent);

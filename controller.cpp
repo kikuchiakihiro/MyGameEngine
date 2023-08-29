@@ -1,4 +1,4 @@
-//#include "controller.h"
+ //#include "controller.h"
 //#include "Engine/Input.h"
 //#include "Engine/Camera.h"
 //
@@ -147,9 +147,33 @@ void Controller::Update()
         transform_.rotate_.y += 1.0f;
     }
 
+
+    if (Input::IsKey(DIK_UP)&& transform_.rotate_.x <= 45)
+    {
+
+    transform_.rotate_.x += 1;
+            
+    }
+    if (Input::IsKey(DIK_DOWN)&& transform_.rotate_.x >= -45)
+    {
+
+        transform_.rotate_.x -= 1;
+    }
+    
     //transform_.rotate_.yの値に合わせてＹ軸回転させる行列
     XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 
+    XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
+    /*if (Input::IsKey(DIK_UP))
+    {
+        transform_.rotate_.x += 1.0f;
+    }
+
+    if (Input::IsKey(DIK_DOWN))
+    {
+        transform_.rotate_.x -= 1.0f;
+    }*/
+   
     //現在位置をベクトルにしておく
     XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
 
@@ -189,8 +213,8 @@ void Controller::Update()
 
 
     //カメラ
-    XMVECTOR vCam = XMVectorSet(0, 10, -10, 0);
-    vCam = XMVector3TransformCoord(vCam, mRotate);
+    XMVECTOR vCam = XMVectorSet(0, 13, -13, 0);
+    vCam = XMVector3TransformCoord(vCam, mRotX*mRotate);
     XMFLOAT3 camPos;
     XMStoreFloat3(&camPos, vPos + vCam);
     Camera::SetPosition(XMLoadFloat3(&camPos));
