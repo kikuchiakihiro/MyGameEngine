@@ -7,18 +7,12 @@ enum
     TYPE_WL,
     TYPE_MAX
 };
-
-
-
-
-
 //◆◆◆を管理するクラス
 class Stage : public GameObject
 {
-    int hModel_;
+    int hModel_[TYPE_MAX];
     int** table_;
-    int x, z;
-
+    int width_, height_;
 public:
     //コンストラクタ
     Stage(GameObject* parent);
@@ -37,6 +31,4 @@ public:
 
     //開放
     void Release() override;
-
-    bool IsWall(int x, int z);
 };

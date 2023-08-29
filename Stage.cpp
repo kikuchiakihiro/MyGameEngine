@@ -1,8 +1,9 @@
 #include "Stage.h"
 #include "Engine/Model.h"
+
 //コンストラクタ
 Stage::Stage(GameObject* parent)
-    :GameObject(parent, "Stage")
+    :GameObject(parent, "Stage"), hModel_(-1)
 {
 }
 
@@ -14,24 +15,20 @@ Stage::~Stage()
 //初期化
 void Stage::Initialize()
 {
-   
-        hModel_ = Model::Load("Assets/BoxDefault.fbx");
-        assert(hModel_ >= 0);
-    
     //モデルデータのロード
-  
+    hModel_ = Model::Load("assets/BoxDefault.fbx");
+    assert(hModel_ >= 0);
 }
 
 //更新
 void Stage::Update()
 {
+   
 }
 
 //描画
 void Stage::Draw()
 {
-    
-
     Transform blockTrans;
 
     for (int x = 0; x < 15; x++)
@@ -43,14 +40,18 @@ void Stage::Draw()
 
             int type = table_[x][z];
 
-            Model::SetTransform(hModel_, blockTrans);
-            Model::Draw(hModel_);
+            Model::SetTransform(hModel_[type], blockTrans);
+            Model::Draw(hModel_[type]);
         }
     }
-
 }
 
 //開放
 void Stage::Release()
 {
+    for (int x = 0; x < width_; x++)
+    {
+        delete[] table_[x];
+    }
+    delete[] table_;
 }
