@@ -1,19 +1,23 @@
 #pragma once
 #include "Engine/GameObject.h"
+namespace {
+    const int MODEL_NUM{ 5 };
+    const int XSIZE{ 15 };
+    const int ZSIZE{ 15 };
+    enum BLOCKTYPE
+    {
+        DEFAULT,BRICK,GRASS,SAND,WATER
+    };
+}
 
-enum
-{
-    TYPE_FLOOR,
-    TYPE_WL,
-    TYPE_MAX
-};
+
+
 //◆◆◆を管理するクラス
 class Stage : public GameObject
 {
   
-    int hModel_;
-    int** table_;
-    int width_, height_;
+    int hModel_[MODEL_NUM];
+    int table_[XSIZE][ZSIZE];
 public:
     //コンストラクタ
     Stage(GameObject* parent);

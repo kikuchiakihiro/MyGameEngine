@@ -150,7 +150,7 @@ void Controller::Update()
     }
 
 
-    if (Input::IsKey(DIK_UP)&& transform_.rotate_.x <= 45)
+    if (Input::IsKey(DIK_UP)&& transform_.rotate_.x <= 43)
     {
 
     transform_.rotate_.x += 1;
