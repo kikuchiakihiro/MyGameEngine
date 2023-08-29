@@ -114,6 +114,8 @@
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
 
+#define SPEED = 1;
+
 //コンストラクタ
 Controller::Controller(GameObject* parent)
     :GameObject(parent, "Controller")
