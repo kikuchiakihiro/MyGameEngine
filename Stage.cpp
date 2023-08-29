@@ -3,7 +3,7 @@
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 Stage::Stage(GameObject* parent)
-    :GameObject(parent, "Stage"), hModel_(-1)
+    :GameObject(parent, "Stage")
 {
 }
 
@@ -29,29 +29,32 @@ void Stage::Update()
 //•`‰æ
 void Stage::Draw()
 {
-    Transform blockTrans;
+    Transform BlockTrans;//TransfromŒ^‚Ì•Ï”
+    //TransformŒ^ -> ˆÊ’u,Œü‚«,‘å‚«‚³‚ðˆµ‚¤Œ^
 
-    for (int x = 0; x < 15; x++)
+
+
+    for (int w = 0; w < 15; w++)
     {
         for (int z = 0; z < 15; z++)
         {
-            blockTrans.position_.x = x;
-            blockTrans.position_.z = z;
+            BlockTrans.position_.x = w;
+            BlockTrans.position_.z = z;
 
-            int type = table_[x][z];
 
-            Model::SetTransform(hModel_[type], blockTrans);
-            Model::Draw(hModel_[type]);
+
+            Model::SetTransform(hModel_, BlockTrans);
+            Model::Draw(hModel_);
+
+
+
         }
     }
 }
+   
 
 //ŠJ•ú
 void Stage::Release()
 {
-    for (int x = 0; x < width_; x++)
-    {
-        delete[] table_[x];
-    }
-    delete[] table_;
+   
 }

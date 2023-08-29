@@ -1,25 +1,16 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-enum
-{
-    TYPE_FLOOR,
-    TYPE_WL,
-    TYPE_MAX
-};
 //◆◆◆を管理するクラス
-class Stage : public GameObject
+class controller : public GameObject
 {
-  
-    int hModel_;
-    int** table_;
-    int width_, height_;
+    int camType_;
 public:
     //コンストラクタ
-    Stage(GameObject* parent);
+    controller(GameObject* parent);
 
     //デストラクタ
-    ~Stage();
+    ~controller();
 
     //初期化
     void Initialize() override;
