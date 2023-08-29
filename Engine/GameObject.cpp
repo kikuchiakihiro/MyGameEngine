@@ -1,96 +1,92 @@
 #include "GameObject.h"
-#include "Direct3D.h"
-#include "Transform.h"
 #include "SphereCollider.h"
-GameObject::GameObject():pParent_(nullptr),pCollider_(nullptr),IsDead(false)
+
+GameObject::GameObject()
+	:pParent_(nullptr), isDead_(false)
 {
 }
 
-GameObject::GameObject(GameObject* parent, const std::string& name): pParent_(parent),
-objectName_(name),IsDead(false)
+GameObject::GameObject(GameObject* parent, const std::string& name)
+	:pParent_(parent), objectName_(name), isDead_(false), pCollider_(nullptr)
 {
 	if (parent != nullptr)
 		this->transform_.pParent_ = &(parent->transform_);
 }
 
-
 GameObject::~GameObject()
 {
 }
 
-// 削除するかどうか
-//bool GameObject::IsDead()
-//{
-//	return (state_.dead != 0);
-//}
-
-// 自分を削除する
-void GameObject::KillMe()
+void GameObject::DrawSub()
 {
-	IsDead = true;
+	Draw();
+
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
+	{
+		(*itr)->DrawSub();
+	}
 }
-
-
-
 
 void GameObject::UpdateSub()
 {
 	Update();
 
 	RoundRobin(GetRootJob());
-
-	for (auto itr = childList_.begin(); itr != childList_.end();itr++ )
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 	{
 		(*itr)->UpdateSub();
 	}
+
 	for (auto itr = childList_.begin(); itr != childList_.end();)
 	{
-		if ((*itr)->IsDead == true)
+		if ((*itr)->isDead_ == true)
 		{
-			ReleaseSub();
-			SAFE_DELETE(*itr);
-			itr = childList_.erase(itr);
+			(*itr)->ReleaseSub();
+			SAFE_DELETE(*itr);//自分自身を消す
+			itr = childList_.erase(itr);//リストからも削除
 		}
-		else {
+		else
+		{
 			itr++;
 		}
 	}
 }
 
-void GameObject::DrawSub()
-{
-	Draw();
-	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
-		(*itr)->DrawSub();
-}
-
 void GameObject::ReleaseSub()
 {
-
-	for (auto itr = childList_.begin(); itr != childList_.end(); itr++) {
-		(*itr)->ReleaseSub();
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
+	{
+		(*itr)->ReleaseSub();//*itrのリリースを呼ぶ
+		SAFE_DELETE(*itr);//*itr自体を消す
 	}
 	Release();
 }
 
-void GameObject::SetScale(XMFLOAT3 scl_)
+void GameObject::KillMe()
 {
-	transform_.scale_ = scl_;
+	isDead_ = true;
 }
 
-void GameObject::SetPosition(XMFLOAT3 pos_)
+void GameObject::SetPosition(XMFLOAT3 position)
 {
-	transform_.position_ = pos_;
+	transform_.position_ = position;
+}
+
+void GameObject::SetPosition(float x, float y, float z)
+{
+	SetPosition(XMFLOAT3(x, y, z));
 }
 
 GameObject* GameObject::FindChildObject(string _objName)
 {
-	if (_objName == this->objectName_) {
-		return(this);
+	if (_objName == this->objectName_)
+	{
+		return(this); //自分が_objNameのオブジェクトだった！
 	}
-	else {
-		//for (auto itr = childList_.begin(); itr != childList_.end(); itr++) 
-		for(auto itr: childList_)
+	else
+	{
+		//for (auto itr = childList_.begin();itr != childList_.end(); itr++)
+		for (auto itr : childList_)
 		{
 			GameObject* obj = itr->FindChildObject(_objName);
 			if (obj != nullptr)
@@ -100,9 +96,9 @@ GameObject* GameObject::FindChildObject(string _objName)
 	return nullptr;
 }
 /// <summary>
-///		再帰呼び出しでROOTJOB探して返すやーつ
+/// 再帰呼び出しでRootJobを探してそのアドレスを返す関数
 /// </summary>
-/// <returns></returns>RootJobのアドレス
+/// <returns>RootJobのアドレス(GameObject * 型）</returns>
 GameObject* GameObject::GetRootJob()
 {
 	if (pParent_ == nullptr)
@@ -111,59 +107,54 @@ GameObject* GameObject::GetRootJob()
 	return pParent_->GetRootJob();
 }
 
+
 GameObject* GameObject::FindObject(string _objName)
 {
-	return GetRootJob()->FindChildObject(_objName);
+	//考えてみて！
+	//自分から見て、ルートジョブを探して、そのルートジョブから全部の子をたどって_objNameを探す！
+	GameObject* rootJob = GetRootJob();
+	GameObject* result = rootJob->FindChildObject(_objName);
+	return(result);
 }
 
 void GameObject::AddCollider(SphereCollider* pCollider)
 {
-	this->pCollider_ = pCollider;
+	pCollider_ = pCollider;
 }
 
 void GameObject::Collision(GameObject* pTarget)
 {
-	if (pTarget == this || pTarget->pCollider_ == nullptr) {
-		return;
-	}
-
-	/*XMVECTOR v{ transform_.position_.x - pTarget->transform_.position_.x,
-				transform_.position_.y - pTarget->transform_.position_.y,
-				transform_.position_.z - pTarget->transform_.position_.z,
-				0};
-	XMVECTOR dist = XMVector3Dot(v, v);*/
-
+	if (pTarget == this || pTarget->pCollider_ == nullptr)
+		return;//自分自身、またはターゲットにコライダーがアタッチされていない
+	//XMVECTOR v{transform_.position_.x - pTarget->transform_.position_.x,
+	//		   transform_.position_.y - pTarget->transform_.position_.y, 
+	//		   transform_.position_.z - pTarget->transform_.position_.z, 
+	//			0};
+	//XMVECTOR dist = XMVector3Dot(v, v);
 	float dist = (transform_.position_.x - pTarget->transform_.position_.x) * (transform_.position_.x - pTarget->transform_.position_.x)
 		+ (transform_.position_.y - pTarget->transform_.position_.y) * (transform_.position_.y - pTarget->transform_.position_.y)
 		+ (transform_.position_.z - pTarget->transform_.position_.z) * (transform_.position_.z - pTarget->transform_.position_.z);
-	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius() * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()));
+	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()) * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius());
 
-	if (dist <= rDist) {
-		//double p = 0;
-		OnCollision(pTarget);
+	//自分とターゲットの距離　<= R1+R2なら
+	//もし、自分のコライダーとターゲットがぶつかっていたら
+	//onCollision(pTarget)を呼び出す！
+	if (dist <= rDist)
+	{
+		//onCollinsion();呼ぼう！
+		double p = 0;
 	}
-
 }
-void GameObject::OnCollision(GameObject* pTarget)
-{
-
-}
-
 
 void GameObject::RoundRobin(GameObject* pTarget)
 {
-	if (pCollider_ == nullptr) 
+	if (pCollider_ == nullptr)
 		return;
-	
-	if (pTarget->pCollider_ != nullptr) 
+	if (pTarget->pCollider_ != nullptr) //自分とターゲット
 		Collision(pTarget);
-	
-	if (pTarget->pCollider_ != nullptr)
-		OnCollision(pTarget);
-
-	for (auto itr = pTarget->childList_.begin(); itr != pTarget->childList_.end(); itr++)
-		RoundRobin(*itr);
-	
+	//自分の子供全部とターゲット
+	for (auto itr : pTarget->childList_)
+		RoundRobin(itr);
 }
 
 
