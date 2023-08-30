@@ -8,6 +8,7 @@ namespace {
     {
         DEFAULT,BRICK,GRASS,SAND,WATER
     };
+    
 }
 
 
@@ -17,7 +18,13 @@ class Stage : public GameObject
 {
   
     int hModel_[MODEL_NUM];
-    int table_[XSIZE][ZSIZE];
+    
+
+    struct BLOCKHEIGHT{
+        BLOCKTYPE blocks;
+             int height;
+             
+    } table_[XSIZE][ZSIZE];
 public:
     //コンストラクタ
     Stage(GameObject* parent);
@@ -36,4 +43,7 @@ public:
 
     //開放
     void Release() override;
+
+    void SetBlock(int _x, int _z, BLOCKTYPE _type);
+    void SetBlockHeight(int _x, int _z, int _height);
 };
