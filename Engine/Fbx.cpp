@@ -61,7 +61,7 @@ HRESULT Fbx::Load(std::string fileName)
 void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 {
 	//頂点情報を入れる配列
-	VERTEX* vertices = new VERTEX[vertexCount_];
+	pVertices_ = new VERTEX[vertexCount_];
 
 	//全ポリゴン
 	for (DWORD poly = 0; poly < polygonCount_; poly++)
@@ -74,18 +74,18 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 
 			//頂点の位置
 			FbxVector4 pos = mesh->GetControlPointAt(index);
-			vertices[index].position = XMVectorSet((float)pos[0], (float)pos[1], (float)pos[2], 0.0f);
+			pVertices_[index].position = XMVectorSet((float)pos[0], (float)pos[1], (float)pos[2], 0.0f);
 
 			//頂点のUV
 			FbxLayerElementUV* pUV = mesh->GetLayer(0)->GetUVs();
 			int uvIndex = mesh->GetTextureUVIndex(poly, vertex, FbxLayerElement::eTextureDiffuse);
 			FbxVector2  uv = pUV->GetDirectArray().GetAt(uvIndex);
-			vertices[index].uv = XMVectorSet((float)uv.mData[0], (float)(1.0f - uv.mData[1]), 0.0f, 0.0f);
+			pVertices_[index].uv = XMVectorSet((float)uv.mData[0], (float)(1.0f - uv.mData[1]), 0.0f, 0.0f);
 
 			//頂点の法線
 			FbxVector4 Normal;
 			mesh->GetPolygonVertexNormal(poly, vertex, Normal);	//ｉ番目のポリゴンの、ｊ番目の頂点の法線をゲット
-			vertices[index].normal = XMVectorSet((float)Normal[0], (float)Normal[1], (float)Normal[2], 0.0f);
+			pVertices_[index].normal = XMVectorSet((float)Normal[0], (float)Normal[1], (float)Normal[2], 0.0f);
 		}
 	}
 
@@ -99,7 +99,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 	bd_vertex.MiscFlags = 0;
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
-	data_vertex.pSysMem = vertices;
+	data_vertex.pSysMem = pVertices_;
 	hr = Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hr))
 	{
@@ -114,13 +114,13 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 {
 	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
 
-	int* index = new int[polygonCount_ * 3];
-	
+	//int* index = new int[polygonCount_ * 3];
+	ppIndex_ = new int*[materialCount_];
 	indexCount_ = new int[materialCount_];
 
 	for (int i = 0; i < materialCount_; i++)
 	{
-
+		ppIndex_[i] = new int[polygonCount_ * 3];
 		int count = 0;
 		
 		//全ポリゴン
@@ -134,7 +134,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 				//3頂点分
 				for (DWORD vertex = 0; vertex < 3; vertex++)
 				{
-					index[count] = mesh->GetPolygonVertex(poly, vertex);
+					ppIndex_[i][count] = mesh->GetPolygonVertex(poly, vertex);
 					count++;
 				}
 			}
@@ -148,7 +148,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 		bd.MiscFlags = 0;
 
 		D3D11_SUBRESOURCE_DATA InitData;
-		InitData.pSysMem = index;
+		InitData.pSysMem = ppIndex_[i];
 		InitData.SysMemPitch = 0;
 		InitData.SysMemSlicePitch = 0;
 
@@ -296,4 +296,24 @@ void Fbx::Draw(Transform& transform)
 
 void Fbx::Release()
 {
+}
+
+void Fbx::RayCast(RayCastData& rayData)
+{
+	for (int material = 0; material < materialCount_; material++) {
+		for (int poly = 0; poly < indexCount_[material]/3; poly++) {
+
+			XMVECTOR v0 = pVertices_[ppIndex_[material][poly * 3 + 0]].position;
+			XMVECTOR v1 = pVertices_[ppIndex_[material][poly * 3 + 1]].position;
+			XMVECTOR v2 = pVertices_[ppIndex_[material][poly * 3 + 2]].position;
+
+			
+			float dist;
+			 rayData.hit = TriangleTests::Intersects(rayData.start,rayData.dir, v0, v1, v2, dist);
+
+			if (rayData.hit) {
+				return;
+			}
+		}
+	}
 }
