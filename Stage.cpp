@@ -13,7 +13,7 @@ Stage::Stage(GameObject* parent)
         for (int z = 0; z < ZSIZE; z++) {
            /* table_[i][f];
             table_[i][f].height = 1;*/
-            SetBlockHeight(x, z, x % 3);
+            SetBlockHeight(x%3, z, x % 3);
         }
     }
 }
@@ -41,7 +41,7 @@ void Stage::Initialize()
     }
     for (int z = 0; z < ZSIZE; z++) {
         for (int x = 0; x < XSIZE; x++) {
-            SetBlock(x, z, GRASS);
+            SetBlock(x, z, WATER);
         }
     }
 }
