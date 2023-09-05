@@ -3,6 +3,7 @@
 #include "Direct3D.h"
 #include "Camera.h"
 #include "Texture.h"
+#include "DirectXCollision.h"
 
 Fbx::Fbx()//vertexCount_(0), polygonCount_(0),
 {
@@ -307,9 +308,10 @@ void Fbx::RayCast(RayCastData& rayData)
 			XMVECTOR v1 = pVertices_[ppIndex_[material][poly * 3 + 1]].position;
 			XMVECTOR v2 = pVertices_[ppIndex_[material][poly * 3 + 2]].position;
 
-			
+			XMVECTOR start = XMLoadFloat4(&rayData.start);
+			XMVECTOR dir = XMLoadFloat4(&rayData.dir);
 			float dist;
-			 rayData.hit = TriangleTests::Intersects(rayData.start,rayData.dir, v0, v1, v2, dist);
+			 rayData.hit = TriangleTests::Intersects(start,dir, v0, v1, v2, dist);
 
 			if (rayData.hit) {
 				return;

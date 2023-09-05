@@ -6,6 +6,7 @@
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
 #include "Engine/Model.h"
+#include "Engine/Fbx.h"
 #include "DirectXCollision.h"
 #pragma comment(lib, "winmm.lib")
 //定数宣言
@@ -23,7 +24,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
-	XMVECTOR BeginP = XMVectorSet(1, 5, 1, 0);
+	/*XMVECTOR BeginP = XMVectorSet(1, 5, 1, 0);
 	XMVECTOR dirVec = XMVectorSet(0, -1, 0, 0);
 	XMVECTOR p1 = XMVectorSet(0, 0, 0, 0);
 	XMVECTOR p2 = XMVectorSet(0, 0, 3, 0);
@@ -33,7 +34,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 	bool result = TriangleTests::Intersects(BeginP, dirVec, p1, p2, p3, dist);
 
-	int aaa;
+	int aaa;*/
 
 	//ウィンドウクラス（設計図）を作成
 	WNDCLASSEX wc;
@@ -83,6 +84,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		PostQuitMessage(0); //エラー起きたら強制終了
 	}
 
+	Fbx* pFbx = new Fbx;
+	pFbx->Load("Assets/BoxBrick.fbx");
+	RayCastData data{};
+	data.start = XMFLOAT4(0, 10, 0, 0);
+	data.dir = XMFLOAT4(0, -1, 0, 0);
+	pFbx->RayCast(data);
+
+	
 	//カメラの初期化
 	Camera::Initialize();
 
