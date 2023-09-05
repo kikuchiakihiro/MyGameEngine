@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Windows.h"
 namespace {
     const int MODEL_NUM{ 5 };
     const int XSIZE{ 15 };
@@ -46,5 +47,5 @@ public:
 
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeight(int _x, int _z, int _height);
-    BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wparam, LPARAM lparam);
+    BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
 };
