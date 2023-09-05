@@ -13,7 +13,7 @@ Stage::Stage(GameObject* parent)
         for (int z = 0; z < ZSIZE; z++) {
            /* table_[i][f];
             table_[i][f].height = 1;*/
-            SetBlockHeight(x, z, x);
+            SetBlockHeight(x, z, x%3);
         }
     }
 }

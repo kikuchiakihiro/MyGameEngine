@@ -8,6 +8,7 @@
 #include "Engine/Model.h"
 #include "Engine/Fbx.h"
 #include "DirectXCollision.h"
+#include "resource.h"
 #pragma comment(lib, "winmm.lib")
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -19,22 +20,12 @@ RootJob* pRootJob = nullptr;
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-
+BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
-	/*XMVECTOR BeginP = XMVectorSet(1, 5, 1, 0);
-	XMVECTOR dirVec = XMVectorSet(0, -1, 0, 0);
-	XMVECTOR p1 = XMVectorSet(0, 0, 0, 0);
-	XMVECTOR p2 = XMVectorSet(0, 0, 3, 0);
-	XMVECTOR p3 = XMVectorSet(3, 0, 0, 0);
-
-	float dist;
-
-	bool result = TriangleTests::Intersects(BeginP, dirVec, p1, p2, p3, dist);
-
-	int aaa;*/
+	
 
 	//ウィンドウクラス（設計図）を作成
 	WNDCLASSEX wc;
@@ -87,7 +78,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	Fbx* pFbx = new Fbx;
 	pFbx->Load("Assets/BoxBrick.fbx");
 	RayCastData data{};
-	data.start = XMFLOAT4(0, 10, 0, 0);
+	data.start = XMFLOAT4(0, 1, 0, 0);
 	data.dir = XMFLOAT4(0, -1, 0, 0);
 	pFbx->RayCast(data);
 
@@ -100,6 +91,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 	pRootJob = new RootJob(nullptr);
 	pRootJob->Initialize();
+
+	HWND hDlg = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, (DLGPROC)DialogProc);
 
 
 	//メッセージループ（何か起きるのを待つ）
@@ -182,4 +175,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		return 0;
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
+{
+	switch (msg)
+	{
+
+	}
+	return FALSE;
 }
