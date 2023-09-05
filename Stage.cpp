@@ -1,7 +1,7 @@
 #include "Stage.h"
 #include "Engine/Model.h"
 #include "Engine/Input.h"
-
+#include "resource.h"
 //コンストラクタ
 Stage::Stage(GameObject* parent)
     :GameObject(parent, "Stage")
@@ -102,3 +102,16 @@ void Stage::SetBlockHeight(int _x, int _z, int _height)
 }
 
 
+BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    switch (msg)
+    {
+    case WM_INITDIALOG:
+      
+
+            
+        SendMessage(GetDlgItem(hDlg, IDC_RADIOUP), BM_SETCHECK, BST_CHECKED, BST_UNCHECKED);
+        return TRUE;
+    }
+    return FALSE;
+}

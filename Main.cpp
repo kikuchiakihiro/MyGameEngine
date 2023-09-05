@@ -9,6 +9,7 @@
 #include "Engine/Fbx.h"
 #include "DirectXCollision.h"
 #include "resource.h"
+#include "Stage.h"
 #pragma comment(lib, "winmm.lib")
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -179,9 +180,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
-	switch (msg)
-	{
-
-	}
-	return FALSE;
+	Stage* pStage = (Stage*)pRootJob->FindObject("Stage");
+	 return pStage->DialogProc(hDlg, msg, wp, lp);
 }
+
