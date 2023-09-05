@@ -26,6 +26,8 @@ class Stage : public GameObject
              int height;
              
     } table_[XSIZE][ZSIZE];
+    int mode_;
+    int select_;
 public:
     //コンストラクタ
     Stage(GameObject* parent);
