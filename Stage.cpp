@@ -2,7 +2,7 @@
 #include "Engine/Model.h"
 #include "Engine/Input.h"
 #include "resource.h"
-
+#include "Engine/Direct3D.h"
 //コンストラクタ
 Stage::Stage(GameObject* parent)
     :GameObject(parent, "Stage")
@@ -50,12 +50,19 @@ void Stage::Initialize()
 //更新
 void Stage::Update()
 {
-    static int a = 2;
+    /*static int a = 2;
     if (Input::IsKeyDown(DIK_U))
             {
         SetBlockHeight(7,7,a++);
         SetBlockHeight(8, 8, a++);
-            }
+            }*/
+    float w = (float)(Direct3D::);
+    float w = (float)();
+
+    XMMATRIX vp =
+    {
+
+    };
 }
 
 //描画

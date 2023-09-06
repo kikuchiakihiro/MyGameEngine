@@ -30,6 +30,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 {
     HRESULT hr; //エラー処理用
 
+    
     ///////////////////////////いろいろ準備するための設定///////////////////////////////
    //いろいろな設定項目をまとめた構造体
     DXGI_SWAP_CHAIN_DESC scDesc;
