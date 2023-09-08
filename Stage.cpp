@@ -1,6 +1,7 @@
 #include "Stage.h"
 #include "Engine/Model.h"
 #include "Engine/Input.h"
+#include "Engine/Camera.h"
 #include "resource.h"
 #include "Engine/Direct3D.h"
 //コンストラクタ
@@ -14,7 +15,7 @@ Stage::Stage(GameObject* parent)
         for (int z = 0; z < ZSIZE; z++) {
            /* table_[i][f];
             table_[i][f].height = 1;*/
-            SetBlockHeight(x, z, x%3);
+            SetBlockHeight(x, z, 0);
         }
     }
 }
@@ -50,19 +51,58 @@ void Stage::Initialize()
 //更新
 void Stage::Update()
 {
-    /*static int a = 2;
-    if (Input::IsKeyDown(DIK_U))
-            {
-        SetBlockHeight(7,7,a++);
-        SetBlockHeight(8, 8, a++);
-            }*/
-    float w = (float)(Direct3D::);
-    float w = (float)();
+    
+    if (!Input::IsMouseButtonDown(0)) {
+        return;
+   }
+    float w = (float)(Direct3D::scrWidth / 2.0f);
+    float h = (float)(Direct3D::scrHeight / 2.0f);
 
     XMMATRIX vp =
     {
-
+        w, 0, 0, 0,
+        0,-h, 0, 0,
+        0, 0, 1, 0,
+        w, h, 0, 1
     };
+    XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
+        XMMATRIX invProj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
+        XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
+        XMFLOAT3 mousePosFront = Input::GetMousePosition();
+        mousePosFront.z = 0.0f;
+    XMFLOAT3 mousePosBack = Input::GetMousePosition();
+    mousePosBack.z = 1.0f;
+
+    XMVECTOR vMouseFront = XMLoadFloat3(&mousePosFront);
+
+    vMouseFront = XMVector3TransformCoord(vMouseFront, invVP * invProj * invView);
+
+    XMVECTOR vMouseBack = XMLoadFloat3(&mousePosBack);
+
+    vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
+    if (Input::IsMouseButtonDown(0)) {
+        for (int x = 0; x < 15; x++) {
+            for (int z = 0; z < 15; z++) {
+                for (int y = 0; y < table_[x][z].height + 1; y++) {
+                    RayCastData data;
+                    XMStoreFloat4(&data.start, vMouseFront);
+                    XMStoreFloat4(&data.dir, vMouseBack - vMouseFront);
+                    Transform trans;
+                   trans.position_.x = x;
+                   trans.position_.y = y;
+                   trans.position_.z = z;
+                    Model::SetTransform(hModel_[0], trans);
+
+                    Model::RayCast(hModel_[0], data);
+
+                    if (data.hit) {
+                        break;
+                    }
+                        
+                }
+            }
+        }
+    }
 }
 
 //描画

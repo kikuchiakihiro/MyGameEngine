@@ -23,7 +23,7 @@ namespace Direct3D
 {
 	extern ID3D11Device* pDevice_;
 	extern ID3D11DeviceContext* pContext_;		//デバイスコンテキスト
-
+	extern int scrWidth, scrHeight;
 	//初期化
 	//winW ウィンドウ幅 winH ウィンドウ高さ
 	HRESULT Initialize(int winW, int winH, HWND hWnd);
