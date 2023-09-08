@@ -80,6 +80,7 @@ void Stage::Update()
     XMVECTOR vMouseBack = XMLoadFloat3(&mousePosBack);
 
     vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
+
     if (Input::IsMouseButtonDown(0)) {
         for (int x = 0; x < 15; x++) {
             for (int z = 0; z < 15; z++) {

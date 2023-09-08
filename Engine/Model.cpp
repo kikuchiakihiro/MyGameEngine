@@ -90,8 +90,6 @@ void Model::RayCast(int hModel, RayCastData& rayData)
 	vpass = vpass-vstart;
 	XMStoreFloat4(&rayData.dir, vpass);
 
-
-
 	modelList[hModel]->pfbx_->RayCast(rayData);
 }
 
