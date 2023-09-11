@@ -4,13 +4,7 @@
 
 
 namespace Model {
-	struct ModelData
-	{
-		Fbx* pfbx_;
-		Transform transform_;
-		std::string filename_;
-
-	};
+	
 	std::vector<ModelData*>modelList;
 
 }

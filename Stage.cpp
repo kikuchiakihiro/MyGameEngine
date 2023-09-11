@@ -81,11 +81,11 @@ void Stage::Update()
 
     vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
 
-    if (Input::IsMouseButtonDown(0)) {
+    
         for (int x = 0; x < 15; x++) {
             for (int z = 0; z < 15; z++) {
                 for (int y = 0; y < table_[x][z].height + 1; y++) {
-                    RayCastData data;
+                    RayCastData data{};
                     XMStoreFloat4(&data.start, vMouseFront);
                     XMStoreFloat4(&data.dir, vMouseBack - vMouseFront);
                     Transform trans;
@@ -97,13 +97,14 @@ void Stage::Update()
                     Model::RayCast(hModel_[0], data);
 
                     if (data.hit) {
+                        table_[x][z].height++;
                         break;
                     }
                         
                 }
             }
         }
-    }
+  
 }
 
 //•`‰æ
