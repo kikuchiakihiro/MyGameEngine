@@ -97,8 +97,19 @@ void Stage::Update()
                     Model::RayCast(hModel_[0], data);
 
                     if (data.hit) {
-                        table_[x][z].height++;
-                        break;
+                        switch (mode_)
+                        {
+                        case 0:
+                            table_[x][z].height++;
+                            break;
+                        case 1:
+                            if (table_[x][z].height > 0)
+                                table_[x][z].height--;
+                            break;
+                        case 2:
+                            break;
+                        }
+                       
                     }
                         
                 }
@@ -169,8 +180,17 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         return TRUE;
 
     case WM_COMMAND:
+
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL,0 , 0);
+
         if (IsDlgButtonChecked(hDlg, IDC_RADIOUP)) {
             mode_ = 0;
+        }
+        if (IsDlgButtonChecked(hDlg, IDC_RADIODOWN)) {
+            mode_ = 1;
+        }
+        if (IsDlgButtonChecked(hDlg, IDC_RADIOCange)) {
+            mode_ = 2;
         }
         return TRUE;
     }
