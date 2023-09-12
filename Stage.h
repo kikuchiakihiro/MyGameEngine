@@ -26,12 +26,12 @@ class Stage : public GameObject
     
 
     struct BLOCKHEIGHT{
-        BLOCKTYPE blocks;
+        int blocks;
              int height;
              
     } table_[XSIZE][ZSIZE];
-    int mode_;
-    int select_;
+    int mode_ = 0;
+    int select_ = 0;
 public:
     //コンストラクタ
     Stage(GameObject* parent);

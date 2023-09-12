@@ -81,7 +81,7 @@ void Stage::Update()
 
     vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
 
-    
+
         for (int x = 0; x < 15; x++) {
             for (int z = 0; z < 15; z++) {
                 for (int y = 0; y < table_[x][z].height + 1; y++) {
@@ -108,11 +108,12 @@ void Stage::Update()
                                 table_[x][z].height--;
                             break;
                         case 2:
+                            table_[x][z].blocks = select_;
                             break;
                         }
-                       
+                      
                     }
-                        
+                    
                 }
             }
         }
@@ -171,18 +172,38 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
     case WM_INITDIALOG:
             //radio
         SendMessage(GetDlgItem(hDlg, IDC_RADIOUP), BM_SETCHECK, BST_CHECKED,0);
-       
+        
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"default");
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Brick");
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Grass");
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"sand");
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"water");
+          
+      
+
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
         return TRUE;
 
     case WM_COMMAND:
 
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL,0 , 0);
+        
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0, 0);
+       
+        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"default")) {
+            select_ = 0;
+        }
+        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Brick")) {
+            select_ = 1;
+        }
+        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Grass")) {
+            select_ = 2;
+        }
+        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"sand")) {
+            select_ = 3;
+        }
+        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"water")) {
+            select_ = 4;
+        }
 
         if (IsDlgButtonChecked(hDlg, IDC_RADIOUP)) {
             mode_ = 0;
