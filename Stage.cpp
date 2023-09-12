@@ -169,6 +169,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         return TRUE;
 
     case WM_COMMAND:
+        if (IsDlgButtonChecked(hDlg, IDC_RADIOUP)) {
+            mode_ = 0;
+        }
         return TRUE;
     }
     return FALSE;
