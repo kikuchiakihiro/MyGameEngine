@@ -97,6 +97,7 @@ void Stage::Update()
                     Model::RayCast(hModel_[0], data);
 
                     if (data.hit) {
+
                         switch (mode_)
                         {
                         case 0:
