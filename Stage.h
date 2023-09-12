@@ -7,7 +7,11 @@ namespace {
     const int ZSIZE{ 15 };
     enum BLOCKTYPE
     {
-        DEFAULT,BRICK,GRASS,SAND,WATER
+        DEFAULT = 0,
+        BRICK,
+        GRASS,
+        SAND,
+        WATER
     };
     
 }

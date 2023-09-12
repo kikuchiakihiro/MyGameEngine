@@ -43,7 +43,7 @@ void Stage::Initialize()
     }
     for (int z = 0; z < ZSIZE; z++) {
         for (int x = 0; x < XSIZE; x++) {
-            SetBlock(x, z, WATER);
+            SetBlock(x, z, DEFAULT);
         }
     }
 }
@@ -168,7 +168,8 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
         return TRUE;
 
-
+    case WM_COMMAND:
+        return TRUE;
     }
     return FALSE;
 }
