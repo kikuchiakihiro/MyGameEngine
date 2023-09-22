@@ -13,7 +13,7 @@ namespace {
         SAND,
         WATER
     };
-    
+    const char* blockName[] = { "デフォルト","レンガ", "草", "砂", "水" };
 }
 
 
@@ -26,7 +26,7 @@ class Stage : public GameObject
     
 
     struct BLOCKHEIGHT{
-        int blocks;
+        BLOCKTYPE blocks;
              int height;
              
     } table_[XSIZE][ZSIZE];

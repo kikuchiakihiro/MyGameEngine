@@ -108,17 +108,24 @@ void Stage::Update()
                                 table_[x][z].height--;
                             break;
                         case 2:
-                            table_[x][z].blocks = select_;
+                            if(Input::IsMouseButton(0)){
+                                table_[x][z].blocks = (BLOCKTYPE)hModel_[select_];
+                            }
+                           
+                           
                             break;
                         }
-                      
+                        return;
+                        }
+
+                        
                     }
                     
                 }
             }
         }
   
-}
+
 
 //•`‰æ
 void Stage::Draw()
@@ -173,14 +180,13 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
             //radio
         SendMessage(GetDlgItem(hDlg, IDC_RADIOUP), BM_SETCHECK, BST_CHECKED,0);
         
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"default");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Brick");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Grass");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"sand");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"water"); 
-          
-      
+        for (int i = 0; i < MODEL_NUM; i++) {
+            SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)blockName[i]);
 
+        }
+        
+      
+        
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
         return TRUE;
 
@@ -188,22 +194,8 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 
         
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0, 0);
+        select_ = SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0, 0);
        
-        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"default")) {
-            select_ = 0;
-        }
-        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Brick")) {
-            select_ = 1;
-        }
-        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Grass")) {
-            select_ = 2;
-        }
-        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"sand")) {
-            select_ = 3;
-        }
-        if (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"water")) {
-            select_ = 4;
-        }
 
         if (IsDlgButtonChecked(hDlg, IDC_RADIOUP)) {
             mode_ = 0;
