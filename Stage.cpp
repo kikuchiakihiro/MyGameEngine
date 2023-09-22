@@ -107,12 +107,9 @@ void Stage::Update()
                             if (table_[x][z].height > 0)
                                 table_[x][z].height--;
                             break;
-                        case 2:
-                            if(Input::IsMouseButton(0)){
+                        case 2:  
                                 table_[x][z].blocks = (BLOCKTYPE)hModel_[select_];
-                            }
-                           
-                           
+                 
                             break;
                         }
                         return;
