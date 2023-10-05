@@ -187,3 +187,8 @@ BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 	 return pStage->DialogProc(hDlg, msg, wp, lp);
 }
 
+BOOL CALLBACK MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
+{
+	Stage* pStage = (Stage*)pRootJob->FindObject("Stage");
+	return pStage->MenuProc(hDlg, msg, wp, lp);
+}
