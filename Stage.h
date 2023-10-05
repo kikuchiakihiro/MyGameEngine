@@ -31,6 +31,7 @@ class Stage : public GameObject
              
     } table_[XSIZE][ZSIZE];
     int mode_ = 0;
+    int MenuMode_ = 0;
     int select_ = 0;
 public:
     //コンストラクタ
@@ -54,4 +55,5 @@ public:
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeight(int _x, int _z, int _height);
     BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
+    BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
 };

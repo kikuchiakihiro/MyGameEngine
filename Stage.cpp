@@ -204,6 +204,17 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
             mode_ = 2;
         }
         return TRUE;
+        
     }
     return FALSE;
+
+   
 }
+
+BOOL Stage::MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp) {
+
+    switch (msg)
+    {
+    case 
+    }
+ }
