@@ -10,7 +10,10 @@
 #include "DirectXCollision.h"
 #include "resource.h"
 #include "Stage.h"
+
 #pragma comment(lib, "winmm.lib")
+
+
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const int WINDOW_WIDTH = 800;  //ウィンドウの幅
@@ -177,6 +180,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);  //プログラム終了
 		return 0;
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case ID_MENU_NEW:
+			OutputDebugString("new FILE");
+			break;
+		case ID_MENU_OPEN:
+			OutputDebugString("Open FILE");
+			break;
+		case ID_MENU_SAVE:
+			OutputDebugString("Save File");
+			
+
+			
+			break;
+		}
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
@@ -187,8 +206,4 @@ BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 	 return pStage->DialogProc(hDlg, msg, wp, lp);
 }
 
-BOOL CALLBACK MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
-{
-	Stage* pStage = (Stage*)pRootJob->FindObject("Stage");
-	return pStage->MenuProc(hDlg, msg, wp, lp);
-}
+
