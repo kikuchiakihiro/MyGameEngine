@@ -191,6 +191,8 @@ void Stage::SaveBlockData()
     selFile = GetSaveFileName(&ofn);
 
     if (selFile == FALSE) return;
+
+
 }
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
