@@ -192,7 +192,17 @@ void Stage::SaveBlockData()
 
     if (selFile == FALSE) return;
 
-
+    HANDLE hFile;        //ファイルのハンドル
+    hFile = CreateFile(
+        "mapdata.txt",                 //ファイル名
+        GENERIC_WRITE,           //アクセスモード（書き込み用）
+        0,                      //共有（なし）
+        NULL,                   //セキュリティ属性（継承しない）
+        CREATE_ALWAYS,           //作成方法
+        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
+        NULL);  //拡張属性（なし）
+        
+    string 
 }
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
