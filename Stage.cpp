@@ -1,3 +1,6 @@
+#include<iostream>
+#include<string>
+#include<Windows.h>
 #include "Stage.h"
 #include "Engine/Model.h"
 #include "Engine/Input.h"
@@ -192,17 +195,49 @@ void Stage::SaveBlockData()
 
     if (selFile == FALSE) return;
 
+
     HANDLE hFile;        //ファイルのハンドル
     hFile = CreateFile(
-        "mapdata.txt",                 //ファイル名
+        "dataFile.txt",                 //ファイル名
         GENERIC_WRITE,           //アクセスモード（書き込み用）
         0,                      //共有（なし）
         NULL,                   //セキュリティ属性（継承しない）
         CREATE_ALWAYS,           //作成方法
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
-        NULL);  //拡張属性（なし）
-        
-    string 
+        NULL);                  //拡張属性（なし）
+   
+    std::string heightdata;
+    std::string typedata;
+    std::string stagedata;
+
+    for (int x = 0; x < XSIZE; x++)
+    {
+        for (int z = 0; z < ZSIZE; z++)
+        {
+            
+            heightdata += std::to_string(table_[x][z].height);
+            typedata += std::to_string(table_[x][z].blocks);
+        }
+    }
+       
+
+    stagedata = heightdata + "\n" + typedata;
+
+    DWORD dwBytes = 0;  //書き込み位置
+    BOOL res = WriteFile(
+        hFile,                   //ファイルハンドル
+        stagedata.c_str(),                  //保存するデータ（文字列）
+        (DWORD)strlen(stagedata.c_str()),   //書き込む文字数
+        &dwBytes,                //書き込んだサイズを入れる変数
+        NULL);
+   
+    CloseHandle(hFile);
+
+}
+
+void Stage::LoadBlockData()
+{
+  
 }
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)

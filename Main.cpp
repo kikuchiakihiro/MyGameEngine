@@ -190,7 +190,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			OutputDebugString("Open FILE");
 			break;
 		case ID_MENU_SAVE:
-			OutputDebugString("Save File");
 			((Stage*)pRootJob->FindObject("Stage"))->SaveBlockData();
 			break;
 		}
