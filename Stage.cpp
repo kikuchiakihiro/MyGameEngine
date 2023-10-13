@@ -260,7 +260,7 @@ void Stage::LoadBlockData()
     if (selFile == FALSE) return;
 
          //ファイルのハンドル
-     CreateFile(
+    hFile = CreateFile(
         "SaveData.txt",                 //ファイル名
         GENERIC_READ,           //アクセスモード（書き込み用）
         0,                      //共有（なし）
