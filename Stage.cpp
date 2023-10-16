@@ -265,7 +265,7 @@ void Stage::LoadBlockData()
         GENERIC_READ,           //アクセスモード（書き込み用）
         0,                      //共有（なし）
         NULL,                   //セキュリティ属性（継承しない）
-        OPEN_EXISTING,           //作成方法
+        OPEN_EXISTING,          //作成方法
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
     //ファイルのサイズを取得
