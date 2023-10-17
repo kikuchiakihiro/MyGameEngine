@@ -1,4 +1,5 @@
 #include<iostream>
+#include<fstream>
 #include<string>
 #include<Windows.h>
 #include "Stage.h"
@@ -215,8 +216,6 @@ void Stage::SaveBlockData()
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
    
-    std::string heightdata;
-    std::string typedata;
     std::string stagedata;
 
     for (int x = 0; x < XSIZE; x++)
@@ -246,51 +245,69 @@ void Stage::SaveBlockData()
 
 void Stage::LoadBlockData()
 {
-    char fileName[MAX_PATH] = "SaveData.map";  //ファイル名を入れる変数
+    //char fileName[MAX_PATH] = "SaveData.map";  //ファイル名を入れる変数
 
-    //「ファイルを保存」ダイアログの設定
-    OPENFILENAME ofn;                         	//名前をつけて保存ダイアログの設定用構造体
-    ZeroMemory(&ofn, sizeof(ofn));            	//構造体初期化
-    ofn.lStructSize = sizeof(OPENFILENAME);   	//構造体のサイズ
-    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")        //─┬ファイルの種類
-        TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
-    ofn.lpstrFile = fileName;               	//ファイル名
-    ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
-    ofn.Flags = OFN_FILEMUSTEXIST;   		//フラグ（同名ファイルが存在したら上書き確認）
-    ofn.lpstrDefExt = "map";                  	//デフォルト拡張子
-     
-    //「ファイルを保存」ダイアログ
-    BOOL selFile;
-    selFile = GetOpenFileName(&ofn);
+    ////「ファイルを保存」ダイアログの設定
+    //OPENFILENAME ofn;                         	//名前をつけて保存ダイアログの設定用構造体
+    //ZeroMemory(&ofn, sizeof(ofn));            	//構造体初期化
+    //ofn.lStructSize = sizeof(OPENFILENAME);   	//構造体のサイズ
+    //ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")        //─┬ファイルの種類
+    //    TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
+    //ofn.lpstrFile = fileName;               	//ファイル名
+    //ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
+    //ofn.Flags = OFN_FILEMUSTEXIST;   		//フラグ（同名ファイルが存在したら上書き確認）
+    //ofn.lpstrDefExt = "map";                  	//デフォルト拡張子
+    // 
+    ////「ファイルを保存」ダイアログ
+    //BOOL selFile;
+    //selFile = GetOpenFileName(&ofn);
 
-    if (selFile == FALSE) return;
+    //if (selFile == FALSE) return;
 
-         //ファイルのハンドル
-    hFile = CreateFile(
-        "SaveData.txt",                 //ファイル名
-        GENERIC_READ,           //アクセスモード（書き込み用）
-        0,                      //共有（なし）
-        NULL,                   //セキュリティ属性（継承しない）
-        OPEN_EXISTING,          //作成方法
-        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
-        NULL);                  //拡張属性（なし）
-    //ファイルのサイズを取得
-    DWORD fileSize = GetFileSize(hFile, NULL);
+    //     //ファイルのハンドル
+    //hFile = CreateFile(
+    //    "SaveData.txt",                 //ファイル名
+    //    GENERIC_READ,           //アクセスモード（書き込み用）
+    //    0,                      //共有（なし）
+    //    NULL,                   //セキュリティ属性（継承しない）
+    //    OPEN_EXISTING,          //作成方法
+    //    FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
+    //    NULL);                  //拡張属性（なし）
+    ////ファイルのサイズを取得
+    //DWORD fileSize = GetFileSize(hFile, NULL);
 
-    //ファイルのサイズ分メモリを確保
-    char* data;
-    data = new char[fileSize];
+    ////ファイルのサイズ分メモリを確保
+    //char* data;
+    //data = new char[fileSize];
 
-    DWORD dwBytes = 0; //読み込み位置
+    //DWORD dwBytes = 0; //読み込み位置
 
-    ReadFile(
-        hFile,     //ファイルハンドル
-        data,      //データを入れる変数
-        fileSize,  //読み込むサイズ
-        &dwBytes,  //読み込んだサイズ
-        NULL);     //オーバーラップド構造体（今回は使わない）
+    //ReadFile(
+    //    hFile,     //ファイルハンドル
+    //    data,      //データを入れる変数
+    //    fileSize,  //読み込むサイズ
+    //    &dwBytes,  //読み込んだサイズ
+    //    NULL);     //オーバーラップド構造体（今回は使わない）
 
-    CloseHandle(hFile);
+    //CloseHandle(hFile);
+    char fileName1[MAX_PATH] = "SaveData.map";
+    OPENFILENAME inputString;
+    ZeroMemory(&inputString, sizeof(inputString));
+    inputString.lStructSize = sizeof(OPENFILENAME);
+    inputString.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0");
+    inputString.lpstrFile = fileName1;
+    inputString.nMaxFile = MAX_PATH;
+    inputString.Flags = OFN_FILEMUSTEXIST;
+    inputString.lpstrDefExt = TEXT("map");
+
+
+
+    if (GetOpenFileName(&inputString)) {
+        std::string reading_line_buffer;
+        std::fstream inputFile(fileName1, std::ios::in);
+
+        inputFile.close();
+    }
 }
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
@@ -324,7 +341,7 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         if (IsDlgButtonChecked(hDlg, IDC_RADIODOWN)) {
             mode_ = 1;
         }
-        if (IsDlgButtonChecked(hDlg, IDC_RADIOCange)) {
+        if (IsDlgButtonChecked(hDlg, IDC_RADIOChange)) {
             mode_ = 2;
         }
         if (IsDlgButtonChecked(hDlg, IDC_RADIOALLchange)) {
