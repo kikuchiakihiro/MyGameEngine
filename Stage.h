@@ -25,7 +25,7 @@ class Stage : public GameObject
     int hModel_[MODEL_NUM];
     
 
-    struct BLOCKHEIGHT{
+    struct BlockData{
         BLOCKTYPE blocks;
              int height;
              
@@ -54,8 +54,8 @@ public:
 
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeight(int _x, int _z, int _height);
-    void SaveBlockData();
-    void LoadBlockData();
+    void Save();
+    void Load();
     BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
     //BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
 };
