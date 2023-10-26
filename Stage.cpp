@@ -125,6 +125,13 @@ void Stage::Update()
                                     table_[x][z].blocks = (BLOCKTYPE)hModel_[select_];
                                 }
                              }
+                        case 4:
+                            for (int x = 0; x < XSIZE; x++) {
+                                table_[x][z].blocks = (BLOCKTYPE)hModel_[select_];
+                            }
+                            for (int z = 0; z < ZSIZE; z++) {
+                                table_[x][z].blocks = (BLOCKTYPE)hModel_[select_];
+                            }
                         }
                         return;
                         }
@@ -185,131 +192,7 @@ void Stage::SetBlockHeight(int _x, int _z, int _height)
 
 
 
-//void Stage::SaveBlockData()
-//{
-//    char fileName[MAX_PATH] = "SaveData.map";  //ファイル名を入れる変数
-//
-//    //「ファイルを保存」ダイアログの設定
-//    OPENFILENAME ofn;                         	//名前をつけて保存ダイアログの設定用構造体
-//    ZeroMemory(&ofn, sizeof(ofn));            	//構造体初期化
-//    ofn.lStructSize = sizeof(OPENFILENAME);   	//構造体のサイズ
-//    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")        //─┬ファイルの種類
-//        TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
-//    ofn.lpstrFile = fileName;               	//ファイル名
-//    ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
-//    ofn.Flags = OFN_OVERWRITEPROMPT;   		//フラグ（同名ファイルが存在したら上書き確認）
-//    ofn.lpstrDefExt = "map";                  	//デフォルト拡張子
-//
-//    //「ファイルを保存」ダイアログ
-//    BOOL selFile;
-//    selFile = GetSaveFileName(&ofn);
-//
-//    if (selFile == FALSE) return;
-//
-//
-//            //ファイルのハンドル
-//    hFile = CreateFile(
-//        "SaveData.txt",//ファイル名
-//        GENERIC_WRITE,           //アクセスモード（書き込み用）
-//        0,                      //共有（なし）
-//        NULL,                   //セキュリティ属性（継承しない）
-//        CREATE_ALWAYS,           //作成方法
-//        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
-//        NULL);                  //拡張属性（なし）
-//   
-//    std::string stagedata;
-//
-//    for (int x = 0; x < XSIZE; x++)
-//    {
-//        for (int z = 0; z < ZSIZE; z++)
-//        {
-//            
-//            stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].blocks)+"\n";
-//            
-//        }
-//    }
-//   
-//
-//    //stagedata = heightdata + "\n" + typedata;
-//
-//    DWORD dwBytes = 0;  //書き込み位置
-//    BOOL res = WriteFile(
-//        hFile,                   //ファイルハンドル
-//        stagedata.c_str(),                  //保存するデータ（文字列）
-//        (DWORD)strlen(stagedata.c_str()),   //書き込む文字数
-//        &dwBytes,                //書き込んだサイズを入れる変数
-//        NULL);
-//   
-//    CloseHandle(hFile);
-//
-//}
-//
-//void Stage::LoadBlockData()
-//{
-//    //char fileName[MAX_PATH] = "SaveData.map";  //ファイル名を入れる変数
-//
-//    ////「ファイルを保存」ダイアログの設定
-//    //OPENFILENAME ofn;                         	//名前をつけて保存ダイアログの設定用構造体
-//    //ZeroMemory(&ofn, sizeof(ofn));            	//構造体初期化
-//    //ofn.lStructSize = sizeof(OPENFILENAME);   	//構造体のサイズ
-//    //ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")        //─┬ファイルの種類
-//    //    TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
-//    //ofn.lpstrFile = fileName;               	//ファイル名
-//    //ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
-//    //ofn.Flags = OFN_FILEMUSTEXIST;   		//フラグ（同名ファイルが存在したら上書き確認）
-//    //ofn.lpstrDefExt = "map";                  	//デフォルト拡張子
-//    // 
-//    ////「ファイルを保存」ダイアログ
-//    //BOOL selFile;
-//    //selFile = GetOpenFileName(&ofn);
-//
-//    //if (selFile == FALSE) return;
-//
-//    //     //ファイルのハンドル
-//    //hFile = CreateFile(
-//    //    "SaveData.txt",                 //ファイル名
-//    //    GENERIC_READ,           //アクセスモード（書き込み用）
-//    //    0,                      //共有（なし）
-//    //    NULL,                   //セキュリティ属性（継承しない）
-//    //    OPEN_EXISTING,          //作成方法
-//    //    FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
-//    //    NULL);                  //拡張属性（なし）
-//    ////ファイルのサイズを取得
-//    //DWORD fileSize = GetFileSize(hFile, NULL);
-//
-//    ////ファイルのサイズ分メモリを確保
-//    //char* data;
-//    //data = new char[fileSize];
-//
-//    //DWORD dwBytes = 0; //読み込み位置
-//
-//    //ReadFile(
-//    //    hFile,     //ファイルハンドル
-//    //    data,      //データを入れる変数
-//    //    fileSize,  //読み込むサイズ
-//    //    &dwBytes,  //読み込んだサイズ
-//    //    NULL);     //オーバーラップド構造体（今回は使わない）
-//
-//    //CloseHandle(hFile);
-//    char fileName1[MAX_PATH] = "SaveData.map";
-//    OPENFILENAME inputString;
-//    ZeroMemory(&inputString, sizeof(inputString));
-//    inputString.lStructSize = sizeof(OPENFILENAME);
-//    inputString.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0");
-//    inputString.lpstrFile = fileName1;
-//    inputString.nMaxFile = MAX_PATH;
-//    inputString.Flags = OFN_FILEMUSTEXIST;
-//    inputString.lpstrDefExt = TEXT("map");
-//
-//
-//
-//    if (GetOpenFileName(&inputString)) {
-//        std::string reading_line_buffer;
-//        std::fstream inputFile(fileName1, std::ios::in);
-//
-//        inputFile.close();
-//    }
-//}
+
 
 void Stage::Save()
 {
@@ -409,6 +292,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         }
         if (IsDlgButtonChecked(hDlg, IDC_RADIOALLchange)) {
             mode_ = 3;
+        }
+        if (IsDlgButtonChecked(hDlg, IDC_RADIOLineChange)) {
+            mode_ = 4;
         }
         return TRUE;
         
